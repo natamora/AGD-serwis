@@ -17,6 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @RequestMapping(value = {"/users/create"}, method = RequestMethod.GET)
     public ModelAndView createNewUser() {
         ModelAndView modelAndView = new ModelAndView();
@@ -25,6 +26,7 @@ public class UserController {
         modelAndView.setViewName("/users/create");
         return modelAndView;
     }
+
 
     @RequestMapping(value = "/users/create", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
