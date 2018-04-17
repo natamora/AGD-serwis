@@ -2,7 +2,6 @@ package com.ksundaysky.service;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,8 +38,6 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
     }
     @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
     public User findUserById(int id) { return userRepository.findById(id);}
 
     @Override
