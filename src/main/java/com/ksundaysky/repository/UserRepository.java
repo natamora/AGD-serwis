@@ -14,4 +14,3 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
     User findById(int id);
 }
-//}UPDATE Company c SET c.address = :address WHERE c.id = :companyId")
