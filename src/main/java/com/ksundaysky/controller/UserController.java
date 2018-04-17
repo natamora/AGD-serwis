@@ -34,7 +34,6 @@ public class UserController {
         modelAndView.addObject("user.role_id_int", roleId);
         modelAndView.setViewName("/users/create");
         List<Role> roleList = roleService.findAll();
-        Map<Integer, String>  roleMap = roleList.stream().collect(Collectors.toMap(Role::getId,Role::getRole));
         modelAndView.addObject("role_map", roleList);
 
         return modelAndView;
@@ -52,6 +51,8 @@ public class UserController {
                             "Ten email został już przypisany do pracownika");
         }
         if (bindingResult.hasErrors()) {
+            List<Role> roleList = roleService.findAll();
+            modelAndView.addObject("role_map", roleList);
             modelAndView.setViewName("/users/create");
         } else {
             userService.saveUser(user);
@@ -62,5 +63,7 @@ public class UserController {
         }
         return modelAndView;
     }
+
+
 
 }
