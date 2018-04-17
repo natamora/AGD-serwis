@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" >
+      xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
 
 <head>
     <title>Dodawanie pracownika</title>
@@ -50,16 +50,18 @@
                     class="validation-message"></label>
             </div>
         </div>
-        <!--
+
+
         <div class="form-group">
             <div class="col-sm-9">
-                <input type="password" th:field="*{user_role}"
-                       placeholder="Rola użytkownika" class="form-control" /> <label
-                    th:if="${#fields.hasErrors('user_role')}" th:errors="*{user_role}"
-                    class="validation-message"></label>
+            <select class="form-control" th:field="*{roles}" >
+                <option  th:each="sopt:${role_map}"
+                        th:value="${sopt.id}" th:text="${sopt.role}">Japan</option>
+            </select>
             </div>
         </div>
-        -->
+
+
         <div class="form-group">
             <div class="col-sm-9">
                 <button type="submit" class="btn btn-primary btn-block">Dodaj</button>
