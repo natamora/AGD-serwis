@@ -7,10 +7,13 @@ import com.ksundaysky.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -60,13 +63,27 @@ public class UserController {
         }
         return modelAndView;
     }
+    @RequestMapping(value = "/users/edit/{id}")
+    public ModelAndView editUser(@PathVariable int id){
+        User user = userService.findUserById(id);
 
-    @RequestMapping(value = "/users/create", method = RequestMethod.POST)
-    public List<User> listUser(@Valid User user, BindingResult bindingResult) {
-       List<User> users = userService.findAll();
-        return users;
+
+
+    @RequestMapping(value="/users/update", method=RequestMethod.POST)
+    public ModelAndView updateUser(@Valid User user, BindingResult bindingResult){
+        ModelAndView modelAndView = new ModelAndView();
+        User userExists = userService.findUserById(user.getId());
+        if (userExists != null) {
+            userExists.setEmail(user.getEmail());
+            userExists.setRoles(user.getRoles());
+            userExists.setName(user.getName());
+            userExists.setLastName(user.getLastName());
+            userService.updateUser(userExists);
+        }
+        modelAndView.addObject("successMessage", "Pracownik został dodany");
+        modelAndView.addObject("user",new User());
+        modelAndView.setViewName("/home");
+
+        return modelAndView;
     }
-
-
-
 }
