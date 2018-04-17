@@ -2,7 +2,6 @@ package com.ksundaysky.controller;
 
 import com.ksundaysky.model.Role;
 import com.ksundaysky.model.User;
-import com.ksundaysky.repository.RoleRepository;
 import com.ksundaysky.service.RoleService;
 import com.ksundaysky.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
@@ -62,6 +59,12 @@ public class UserController {
 
         }
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/users/create", method = RequestMethod.POST)
+    public List<User> listUser(@Valid User user, BindingResult bindingResult) {
+       List<User> users = userService.findAll();
+        return users;
     }
 
 
