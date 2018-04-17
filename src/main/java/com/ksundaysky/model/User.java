@@ -103,4 +103,8 @@ public class User {
         this.roles = roles;
     }
 
+    public void setRoles(Role role) {
+        this.roles.add(role);
+    }
+
 }
