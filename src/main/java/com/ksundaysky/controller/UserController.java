@@ -75,7 +75,6 @@ public class UserController {
         modelAndView.setViewName("/users/edit");
         List<Role> roleList = roleService.findAll();
         Map<Integer, String>  roleMap = roleList.stream().collect(Collectors.toMap(Role::getId,Role::getRole));
-
         modelAndView.addObject("role_map", roleList);
         //return new ModelAndView("/users/edit","user",user);
         return modelAndView;
