@@ -93,4 +93,11 @@ public class UserController {
 
         return modelAndView;
     }
+
+    @RequestMapping(value = "/users/create", method = RequestMethod.POST)
+    public List<User> listUser(@Valid User user, BindingResult bindingResult) {
+              List<User> users = userService.findAll();
+                return users;
+         }
+
 }
