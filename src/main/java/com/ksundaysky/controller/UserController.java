@@ -94,10 +94,13 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/create", method = RequestMethod.POST)
-    public List<User> listUser(@Valid User user, BindingResult bindingResult) {
-              List<User> users = userService.findAll();
-                return users;
-         }
+    @RequestMapping(value = "/users/list", method = RequestMethod.GET)
+    public ModelAndView listUser(@Valid User user, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        List<User> users = userService.findAll();
+        modelAndView.addObject("users",users);
+        modelAndView.setViewName("/users/list");
+        return  modelAndView;
+    }
 
 }
