@@ -2,7 +2,6 @@ package com.ksundaysky.controller;
 
 import com.ksundaysky.model.Role;
 import com.ksundaysky.model.User;
-import com.ksundaysky.repository.RoleRepository;
 import com.ksundaysky.service.RoleService;
 import com.ksundaysky.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,6 @@ import org.springframework.web.servlet.View;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
@@ -70,15 +67,8 @@ public class UserController {
     public ModelAndView editUser(@PathVariable int id){
         User user = userService.findUserById(id);
 
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("/users/edit");
-        List<Role> roleList = roleService.findAll();
-        Map<Integer, String>  roleMap = roleList.stream().collect(Collectors.toMap(Role::getId,Role::getRole));
-        modelAndView.addObject("role_map", roleList);
-        //return new ModelAndView("/users/edit","user",user);
-        return modelAndView;
-    }
+
+
     @RequestMapping(value="/users/update", method=RequestMethod.POST)
     public ModelAndView updateUser(@Valid User user, BindingResult bindingResult){
         ModelAndView modelAndView = new ModelAndView();
