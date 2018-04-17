@@ -8,10 +8,13 @@ import com.ksundaysky.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -62,5 +65,35 @@ public class UserController {
         }
         return modelAndView;
     }
+    @RequestMapping(value = "/users/edit/{id}")
+    public ModelAndView editUser(@PathVariable int id){
+        User user = userService.findUserById(id);
 
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("/users/edit");
+        List<Role> roleList = roleService.findAll();
+        Map<Integer, String>  roleMap = roleList.stream().collect(Collectors.toMap(Role::getId,Role::getRole));
+
+        modelAndView.addObject("role_map", roleList);
+        //return new ModelAndView("/users/edit","user",user);
+        return modelAndView;
+    }
+    @RequestMapping(value="/users/update", method=RequestMethod.POST)
+    public ModelAndView updateUser(@Valid User user, BindingResult bindingResult){
+        ModelAndView modelAndView = new ModelAndView();
+        User userExists = userService.findUserById(user.getId());
+        if (userExists != null) {
+            userExists.setEmail(user.getEmail());
+            userExists.setRoles(user.getRoles());
+            userExists.setName(user.getName());
+            userExists.setLastName(user.getLastName());
+            userService.saveUser(userExists);
+        }
+        modelAndView.addObject("successMessage", "Pracownik został dodany");
+        modelAndView.addObject("user",new User());
+        modelAndView.setViewName("/home");
+
+        return modelAndView;
+    }
 }
