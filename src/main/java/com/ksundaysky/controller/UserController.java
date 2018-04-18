@@ -104,4 +104,26 @@ public class UserController {
         return  modelAndView;
     }
 
+    @RequestMapping(value = {"/users/delete/{userId}"}, method = RequestMethod.GET)
+    public ModelAndView delete(@PathVariable int userId) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        User user = userService.findUserById(userId);
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("/users/delete");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/users/delete/accept/{userId}"}, method = RequestMethod.GET)
+    public ModelAndView deleteAccept( @PathVariable int userId) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        userService.deleteById(userId);
+        modelAndView.setViewName("/home");
+        modelAndView.addObject("successMessage", "Pracownik został usunięty");
+        return modelAndView;
+
+    }
+
 }
