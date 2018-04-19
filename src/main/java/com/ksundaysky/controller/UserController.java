@@ -82,7 +82,8 @@ public class UserController {
         User userExists = userService.findUserById(user.getId());
         if (userExists != null) {
             userExists.setEmail(user.getEmail());
-            userExists.setRoles(user.getRoles());
+//            userExists.setRoles(user.getRoles());
+            userExists.setRole_id(user.getRole_id());
             userExists.setName(user.getName());
             userExists.setLastName(user.getLastName());
             userService.updateUser(userExists);
@@ -101,6 +102,28 @@ public class UserController {
         modelAndView.addObject("users",users);
         modelAndView.setViewName("/users/list");
         return  modelAndView;
+    }
+
+    @RequestMapping(value = {"/users/delete/{userId}"}, method = RequestMethod.GET)
+    public ModelAndView delete(@PathVariable int userId) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        User user = userService.findUserById(userId);
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("/users/delete");
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/users/delete/accept/{userId}"}, method = RequestMethod.GET)
+    public ModelAndView deleteAccept( @PathVariable int userId) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        userService.deleteById(userId);
+        modelAndView.setViewName("/home");
+        modelAndView.addObject("successMessage", "Pracownik został usunięty");
+        return modelAndView;
+
     }
 
 }

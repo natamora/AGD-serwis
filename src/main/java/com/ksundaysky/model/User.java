@@ -43,9 +43,13 @@ public class User {
     private String lastName;
     @Column(name = "active")
     private int active;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+//    private Set<Role> roles;
+
+    @Column(name = "role_id")
+    private int role_id;
+
 
     public int getId() {
         return id;
@@ -95,16 +99,24 @@ public class User {
         this.active = active;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+//    public Set<Role> getRoles() {
+//        return roles;
+//    }
+//
+//    public void setRoles(Set<Role> roles) {
+//        this.roles = roles;
+//    }
+//
+//    public void setRoles(Role role) {
+//        this.roles.add(role);
+//    }
+
+
+    public int getRole_id() {
+        return role_id;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole_id(int role_id) {
+        this.role_id = role_id;
     }
-
-    public void setRoles(Role role) {
-        this.roles.add(role);
-    }
-
 }

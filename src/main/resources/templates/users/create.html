@@ -67,7 +67,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label">Rola </label>
                 <div class="col-sm-6">
-                <select class="form-control" th:field="*{roles}" >
+                <select class="form-control" th:field="*{role_id}" >
                     <option  th:each="sopt:${role_map}"
                             th:value="${sopt.id}" th:text="${sopt.role}">Japan</option>
                 </select>
