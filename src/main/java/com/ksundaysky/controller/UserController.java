@@ -88,7 +88,7 @@ public class UserController {
             userExists.setLastName(user.getLastName());
             userService.updateUser(userExists);
         }
-        modelAndView.addObject("successMessage", "Pracownik został dodany");
+        modelAndView.addObject("successMessage", "Pracownik został edytowany");
         modelAndView.addObject("user",new User());
         modelAndView.setViewName("/home");
 
