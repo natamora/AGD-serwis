@@ -2,6 +2,7 @@ package com.ksundaysky.service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,9 +32,33 @@ public class UserServiceImpl implements UserService{
     public void saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-        Role userRole = roleRepository.findByRole("ADMIN");
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+//        Role[] role = new Role[1];
+//        user.getRole().toArray(role);
+//        Role userRole = roleRepository.findByRole(role[0].getRole());
+//        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
     }
+    @Override
+    public User findUserById(int id) { return userRepository.findById(id);}
 
+    @Override
+    public void updateUser(User user) {
+
+//        Role[] role = new Role[1];
+////        user.getRoles().toArray(role);
+////        Role userRole = roleRepository.findByRole(role[0].getRole());
+////        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        userRepository.save(user);
+    }
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void deleteById(int id){
+
+        userRepository.deleteById(id);
+        //userRepository.delete(Long.valueOf((long)id));
+    }
 }
