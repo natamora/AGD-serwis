@@ -86,8 +86,7 @@ public class ProductController {
         }
 
         productService.updateProduct(productExists);
-
-        return new ModelAndView("redirect:/products","Udane dodawanie","bbb");
+        return new ModelAndView("redirect:/products","udane","edycja");
     }
 
     @RequestMapping(value="/products/{id}")
