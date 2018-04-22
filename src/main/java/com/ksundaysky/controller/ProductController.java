@@ -1,12 +1,11 @@
 package com.ksundaysky.controller;
 
 import com.ksundaysky.model.Product;
-import com.ksundaysky.model.Role;
-import com.ksundaysky.model.User;
 import com.ksundaysky.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,6 +41,7 @@ public class ProductController {
 
         return modelAndView;
     }
+
     @RequestMapping(value = "/products")
     public ModelAndView index()
     {
@@ -51,14 +51,35 @@ public class ProductController {
         modelAndView.setViewName("/products/index");
         return modelAndView;
     }
-//    @RequestMapping(value = "/users/list", method = RequestMethod.GET)
-//    public ModelAndView listUser(@Valid User user, BindingResult bindingResult) {
-//        ModelAndView modelAndView = new ModelAndView();
-//        List<User> users = userService.findAll();
-//        modelAndView.addObject("users",users);
-//        modelAndView.setViewName("/users/list");
-//        return  modelAndView;
-//    }
+
+    @RequestMapping(value = "/products/edit/{id}")
+    public ModelAndView edit(@PathVariable int id){
+        Product product = productService.findById(id);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("product", product);
+        modelAndView.setViewName("/products/edit");
+
+        return modelAndView;
+    }
+    @RequestMapping(value="/products/edit", method=RequestMethod.POST)
+    public ModelAndView update(@Valid Product product, BindingResult bindingResult){
+
+        Product productExists = productService.findById(product.getId());
+        if (productExists != null) {
+            productExists.setName(product.getName());
+            productExists.setBrand(product.getBrand());
+            productExists.setLastName(product.getLastName());
+            productExists.setModel(product.getModel());
+            productExists.setProduct_name(product.getProduct_name());
+            productExists.setNote(product.getNote());
+            productService.updateProduct(productExists);
+        }
+
+        return new ModelAndView("redirect:/products","Udane dodawanie","bbb");
+    }
+
+
 
 
 }
