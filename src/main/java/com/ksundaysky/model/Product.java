@@ -16,14 +16,19 @@ public class Product {
         @Column(name = "product_id")
         private int id;
         @Column(name = "product_name")
+        @NotEmpty(message = "*Uzupełnij nazwę produktu")
         private String product_name;
         @Column(name = "product_brand")
+        @NotEmpty(message = "*Uzupełnij markę produktu")
         private String brand;
         @Column(name = "product_model")
+        @NotEmpty(message = "*Uzupełnij model produktu")
         private String model;
         @Column(name = "owner_name")
+        @NotEmpty(message = "*Uzupełnij imię właściciela")
         private String name;
         @Column(name = "owner_last_name")
+        @NotEmpty(message = "*Uzupełnij nazwisko właściciela")
         private String lastName;
         @Column(name = "product_note")
         private String note;

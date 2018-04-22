@@ -62,6 +62,7 @@ public class ProductController {
 
         return modelAndView;
     }
+
     @RequestMapping(value="/products/edit", method=RequestMethod.POST)
     public ModelAndView update(@Valid Product product, BindingResult bindingResult){
 
@@ -73,8 +74,18 @@ public class ProductController {
             productExists.setModel(product.getModel());
             productExists.setProduct_name(product.getProduct_name());
             productExists.setNote(product.getNote());
-            productService.updateProduct(productExists);
+
         }
+
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("product", product);
+            modelAndView.setViewName("/products/edit");
+
+            return modelAndView;
+        }
+
+        productService.updateProduct(productExists);
 
         return new ModelAndView("redirect:/products","Udane dodawanie","bbb");
     }
