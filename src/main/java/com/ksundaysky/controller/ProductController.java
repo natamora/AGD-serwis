@@ -42,6 +42,23 @@ public class ProductController {
 
         return modelAndView;
     }
+    @RequestMapping(value = "/products")
+    public ModelAndView index()
+    {
+        ModelAndView modelAndView = new ModelAndView();
+        List<Product> products = productService.findAll();
+        modelAndView.addObject("products",products);
+        modelAndView.setViewName("/products/index");
+        return modelAndView;
+    }
+//    @RequestMapping(value = "/users/list", method = RequestMethod.GET)
+//    public ModelAndView listUser(@Valid User user, BindingResult bindingResult) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        List<User> users = userService.findAll();
+//        modelAndView.addObject("users",users);
+//        modelAndView.setViewName("/users/list");
+//        return  modelAndView;
+//    }
 
 
 }
