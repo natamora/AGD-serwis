@@ -79,6 +79,16 @@ public class ProductController {
         return new ModelAndView("redirect:/products","Udane dodawanie","bbb");
     }
 
+    @RequestMapping(value="/products/{id}")
+    public ModelAndView show(@PathVariable int id){
+        Product product = productService.findById(id);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("product", product);
+        modelAndView.setViewName("/products/show");
+
+        return modelAndView;
+    }
 
 
 
