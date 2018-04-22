@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 @Controller
@@ -43,12 +44,19 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/products")
-    public ModelAndView index()
+
+    public ModelAndView index(HttpServletRequest request)
     {
         ModelAndView modelAndView = new ModelAndView();
         List<Product> products = productService.findAll();
         modelAndView.addObject("products",products);
         modelAndView.setViewName("/products/index");
+        String successMessage = (String)request.getSession().getAttribute("successMessage");
+        if( successMessage != null) {
+            modelAndView.addObject("successMessage", successMessage);
+            request.getSession().removeAttribute("successMessage");
+        }
+
         return modelAndView;
     }
 
@@ -64,7 +72,7 @@ public class ProductController {
     }
 
     @RequestMapping(value="/products/edit", method=RequestMethod.POST)
-    public ModelAndView update(@Valid Product product, BindingResult bindingResult){
+    public ModelAndView update(@Valid Product product, BindingResult bindingResult, HttpServletRequest request){
 
         Product productExists = productService.findById(product.getId());
         if (productExists != null) {
@@ -85,8 +93,11 @@ public class ProductController {
             return modelAndView;
         }
 
+        request.getSession().setAttribute("successMessage", "Produkt został poprawnie zmodyfikowany!!");
         productService.updateProduct(productExists);
-        return new ModelAndView("redirect:/products","udane","edycja");
+
+
+        return new ModelAndView("redirect:/products");
     }
 
     @RequestMapping(value="/products/{id}")
