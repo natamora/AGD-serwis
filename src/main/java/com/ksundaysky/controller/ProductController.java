@@ -70,6 +70,10 @@ public class ProductController {
         Product product = productService.findById(id);
 
         ModelAndView modelAndView = new ModelAndView();
+        if(product == null){
+             modelAndView.addObject("errorMessage", "Produkt o danym id nie istnieje");
+        }
+
         modelAndView.addObject("product", product);
         modelAndView.setViewName("/products/edit");
 
@@ -110,6 +114,9 @@ public class ProductController {
         Product product = productService.findById(id);
 
         ModelAndView modelAndView = new ModelAndView();
+        if(product == null){
+            modelAndView.addObject("errorMessage","Produkt o danym id nie istnieje");
+        }
         modelAndView.addObject("product", product);
         modelAndView.setViewName("/products/show");
 
