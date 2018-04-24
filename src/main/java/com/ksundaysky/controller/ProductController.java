@@ -1,7 +1,6 @@
 package com.ksundaysky.controller;
 
 import com.ksundaysky.model.Product;
-import com.ksundaysky.model.Role;
 import com.ksundaysky.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +21,7 @@ public class ProductController {
     ProductService productService;
 
     @RequestMapping(value = {"/products/create"}, method = RequestMethod.GET)
-    public ModelAndView createNewProdct() {
+    public ModelAndView createNewUser() {
         ModelAndView modelAndView = new ModelAndView();
         Product product = new Product();
         modelAndView.addObject("product", product);
@@ -31,19 +30,15 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/products/create", method = RequestMethod.POST)
-    public ModelAndView createNewProdct(@Valid Product product, BindingResult bindingResult) {
+    public ModelAndView createNewUser(@Valid Product product, BindingResult bindingResult) {
 
         ModelAndView modelAndView = new ModelAndView();
 
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("/products/create");
-        }
-        else {
             productService.saveProduct(product);
             modelAndView.addObject("successMessage", "Produkt został dodany");
             modelAndView.addObject("product", new Product());
             modelAndView.setViewName("/home");
-        }
+
 
         return modelAndView;
     }
@@ -70,14 +65,33 @@ public class ProductController {
         Product product = productService.findById(id);
 
         ModelAndView modelAndView = new ModelAndView();
-        if(product == null){
-             modelAndView.addObject("errorMessage", "Produkt o danym id nie istnieje");
-        }
-
         modelAndView.addObject("product", product);
         modelAndView.setViewName("/products/edit");
 
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/products/delete/{productId}")
+    public ModelAndView delete(@PathVariable int productId){
+        Product product = productService.findById(productId);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("product", product);
+        modelAndView.setViewName("/products/delete");
+
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = {"/products/delete/accept/{productId}"}, method = RequestMethod.GET)
+    public ModelAndView deleteAccept( @PathVariable int productId) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        productService.deleteById(productId);
+        modelAndView.setViewName("/products");
+        modelAndView.addObject("successMessage", "Produkt został usunięty");
+        return modelAndView;
+
     }
 
     @RequestMapping(value="/products/edit", method=RequestMethod.POST)
@@ -114,9 +128,6 @@ public class ProductController {
         Product product = productService.findById(id);
 
         ModelAndView modelAndView = new ModelAndView();
-        if(product == null){
-            modelAndView.addObject("errorMessage","Produkt o danym id nie istnieje");
-        }
         modelAndView.addObject("product", product);
         modelAndView.setViewName("/products/show");
 
