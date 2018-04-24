@@ -63,8 +63,9 @@ public class UserController {
         }
         return modelAndView;
     }
+
     @RequestMapping(value = "/users/edit/{id}")
-    public ModelAndView editUser(@PathVariable int id){
+    public ModelAndView editUser(@PathVariable int id) {
         User user = userService.findUserById(id);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -74,16 +75,16 @@ public class UserController {
         modelAndView.addObject("role_map", roleList);
         return modelAndView;
     }
+
     @RequestMapping(value="/users/update", method=RequestMethod.POST)
     public ModelAndView updateUser(@Valid User user, BindingResult bindingResult){
-
+      
         User userExists = userService.findUserById(user.getId());
         if (userExists != null) {
             userExists.setEmail(user.getEmail());
             userExists.setRole_id(user.getRole_id());
             userExists.setName(user.getName());
             userExists.setLastName(user.getLastName());
-
         }
         if (bindingResult.hasFieldErrors("email") || bindingResult.hasFieldErrors("name") || bindingResult.hasFieldErrors("lastName")) {
             ModelAndView modelAndView = new ModelAndView();
@@ -101,9 +102,9 @@ public class UserController {
     public ModelAndView listUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         List<User> users = userService.findAll();
-        modelAndView.addObject("users",users);
+        modelAndView.addObject("users", users);
         modelAndView.setViewName("/users/list");
-        return  modelAndView;
+        return modelAndView;
     }
 
     @RequestMapping(value = {"/users/delete/{userId}"}, method = RequestMethod.GET)
@@ -118,7 +119,7 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/users/delete/accept/{userId}"}, method = RequestMethod.GET)
-    public ModelAndView deleteAccept( @PathVariable int userId) {
+    public ModelAndView deleteAccept(@PathVariable int userId) {
 
         ModelAndView modelAndView = new ModelAndView();
         userService.deleteById(userId);
@@ -128,4 +129,15 @@ public class UserController {
 
     }
 
+    @RequestMapping(value = "/users/view/{id}")
+    public ModelAndView viewUser(@PathVariable int id) {
+        User user = userService.findUserById(id);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("/users/view");
+        return modelAndView;
+
+
+    }
 }
