@@ -97,7 +97,7 @@ public class ProductController {
 
         ModelAndView modelAndView = new ModelAndView();
         productService.deleteById(productId);
-        modelAndView.setViewName("/products");
+        modelAndView.setViewName("/home");
         modelAndView.addObject("successMessage", "Produkt został usunięty");
         return modelAndView;
 
