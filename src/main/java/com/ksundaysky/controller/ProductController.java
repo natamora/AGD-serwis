@@ -1,6 +1,7 @@
 package com.ksundaysky.controller;
 
 import com.ksundaysky.model.Product;
+-import com.ksundaysky.model.Role;
 import com.ksundaysky.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
