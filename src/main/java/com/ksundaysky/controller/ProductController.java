@@ -1,7 +1,7 @@
 package com.ksundaysky.controller;
 
 import com.ksundaysky.model.Product;
--import com.ksundaysky.model.Role;
+import com.ksundaysky.model.Role;
 import com.ksundaysky.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,10 +39,10 @@ public class ProductController {
             modelAndView.setViewName("/products/create");	
         }	
         else {	
-             productService.saveProduct(product);	             productService.saveProduct(product);
-             modelAndView.addObject("successMessage", "Produkt został dodany");	             modelAndView.addObject("successMessage", "Produkt został dodany");
-             modelAndView.addObject("product", new Product());	             modelAndView.addObject("product", new Product());
-             modelAndView.setViewName("/home");	             modelAndView.setViewName("/home");
+             productService.saveProduct(product);	             
+             modelAndView.addObject("successMessage", "Produkt został dodany");	            
+             modelAndView.addObject("product", new Product());	             
+             modelAndView.setViewName("/home");	             
         }
 
 
@@ -145,7 +145,5 @@ public class ProductController {
 
         return modelAndView;
     }
-
-
 
 }
