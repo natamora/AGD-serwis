@@ -118,7 +118,7 @@ public class UserController {
         List<User> users;
         if (roleId == null || roleId == 0) {
             users = userService.findAll().stream()
-                    .map(user -> new User(user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(),
+                    .map(user -> new User(user.getId(),user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(),
                             user.getRole_id(), roleService.getRoleById(user.getRole_id()).getRole()))
                     .collect(Collectors.toList());
         } else {
@@ -126,7 +126,7 @@ public class UserController {
 
             users = userService.findAll().stream()
                     .filter(user -> user.getRole_id() == roleId)
-                    .map(user -> new User(user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(), user.getRole_id(), roleName))
+                    .map(user -> new User(user.getId(),user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(), user.getRole_id(), roleName))
                     .collect(Collectors.toList());
         }
 
