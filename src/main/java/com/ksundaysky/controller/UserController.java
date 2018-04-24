@@ -69,6 +69,9 @@ public class UserController {
         User user = userService.findUserById(id);
 
         ModelAndView modelAndView = new ModelAndView();
+        if(user == null){
+            modelAndView.addObject("errorMessage", "Użytkownik o danym id nie istnieje");
+        }
         modelAndView.addObject("user", user);
         modelAndView.setViewName("/users/edit");
         List<Role> roleList = roleService.findAll();
@@ -112,6 +115,9 @@ public class UserController {
 
         ModelAndView modelAndView = new ModelAndView();
         User user = userService.findUserById(userId);
+        if(user == null){
+            modelAndView.addObject("errorMessage", "Użytkownik o danym id nie istnieje");
+        }
         modelAndView.addObject("user", user);
         modelAndView.setViewName("/users/delete");
 
@@ -134,6 +140,9 @@ public class UserController {
         User user = userService.findUserById(id);
 
         ModelAndView modelAndView = new ModelAndView();
+        if(user == null){
+            modelAndView.addObject("errorMessage", "Użytkownik o danym id nie istnieje");
+        }
         modelAndView.addObject("user", user);
         modelAndView.setViewName("/users/view");
         return modelAndView;
