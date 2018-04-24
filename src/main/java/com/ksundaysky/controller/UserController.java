@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -72,38 +73,28 @@ public class UserController {
         modelAndView.addObject("user", user);
         modelAndView.setViewName("/users/edit");
         List<Role> roleList = roleService.findAll();
+        Map<Integer, String> roleMap = roleList.stream().collect(Collectors.toMap(Role::getId, Role::getRole));
         modelAndView.addObject("role_map", roleList);
+        //return new ModelAndView("/users/edit","user",user);
         return modelAndView;
     }
 
-    @RequestMapping(value="/users/update", method=RequestMethod.POST)
-    public ModelAndView updateUser(@Valid User user, BindingResult bindingResult){
-      
+    @RequestMapping(value = "/users/update", method = RequestMethod.POST)
+    public ModelAndView updateUser(@Valid User user, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserById(user.getId());
         if (userExists != null) {
             userExists.setEmail(user.getEmail());
+//            userExists.setRoles(user.getRoles());
             userExists.setRole_id(user.getRole_id());
             userExists.setName(user.getName());
             userExists.setLastName(user.getLastName());
+            userService.updateUser(userExists);
         }
-        if (bindingResult.hasFieldErrors("email") || bindingResult.hasFieldErrors("name") || bindingResult.hasFieldErrors("lastName")) {
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.addObject("user", user);
-            List<Role> roleList = roleService.findAll();
-            modelAndView.addObject("role_map", roleList);
-            modelAndView.setViewName("/users/edit");
-            return modelAndView;
-        }
-        userService.updateUser(userExists);
-        return new ModelAndView("redirect:/users/list","udane","1");
-    }
+        modelAndView.addObject("successMessage", "Pracownik został edytowany");
+        modelAndView.addObject("user", new User());
+        modelAndView.setViewName("/home");
 
-    @RequestMapping(value = "/users/list", method = RequestMethod.GET)
-    public ModelAndView listUser(@Valid User user, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        List<User> users = userService.findAll();
-        modelAndView.addObject("users", users);
-        modelAndView.setViewName("/users/list");
         return modelAndView;
     }
 
@@ -118,6 +109,33 @@ public class UserController {
         return modelAndView;
     }
 
+    @RequestMapping(value = {"/users/list"}, method = RequestMethod.GET)
+    public ModelAndView test(@RequestParam Integer roleId) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        List<Role> roles = roleService.findAll();
+        modelAndView.addObject("roles", roles);
+        List<User> users;
+        if (roleId == null || roleId == 0) {
+            users = userService.findAll().stream()
+                    .map(user -> new User(user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(),
+                            user.getRole_id(), roleService.getRoleById(user.getRole_id()).getRole()))
+                    .collect(Collectors.toList());
+        } else {
+            String roleName = roleService.getRoleById(roleId).getRole();
+
+            users = userService.findAll().stream()
+                    .filter(user -> user.getRole_id() == roleId)
+                    .map(user -> new User(user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(), user.getRole_id(), roleName))
+                    .collect(Collectors.toList());
+        }
+
+        modelAndView.addObject("users", users);
+        modelAndView.setViewName("/users/list");
+        return modelAndView;
+    }
+
+
     @RequestMapping(value = {"/users/delete/accept/{userId}"}, method = RequestMethod.GET)
     public ModelAndView deleteAccept(@PathVariable int userId) {
 
@@ -129,15 +147,4 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/users/view/{id}")
-    public ModelAndView viewUser(@PathVariable int id) {
-        User user = userService.findUserById(id);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("/users/view");
-        return modelAndView;
-
-
-    }
 }
