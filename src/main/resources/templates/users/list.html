@@ -29,13 +29,16 @@
                     <div class="col-md-1" ><strong></strong></div>
 
                 </div>
-                <div class="row list-item" th:each="user : ${users}">
-                    <div class="col-md-1" th:text="${user.getName()}"</div>
-                <div class="col-md-2" th:text="${user.getLastName()}" ></div>
-                <div class="col-md-2" th:text="${user.getEmail()}"></div>
-                <div class="col-md-2" th:text="${user.getRoleName()}"></div>
-
-
+                <div class="row list-item" th:each="user:${users}">
+                    <div class="col-md-1" th:text="${user.name}"</div>
+                <div class="col-md-2" th:text="${user.lastName}" ></div>
+                <div class="col-md-2" th:text="${user.email}"></div>
+                <div class="col-md-2" th:text="${user.RoleName}"></div>
+                <div class="col-md-1">
+                    <a th:href="@{'/users/view/'+${user.id}}" >Zobacz</a>
+                    <a th:href="@{'/users/edit/'+${user.id}}" >Edytuj</a>
+                    <a th:href="@{'/users/delete/'+${user.id}}" >Usuń</a>
+                </div>
             </div>
         </div>
 
