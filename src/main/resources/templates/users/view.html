@@ -1,12 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>View</title>
-</head>
+        <title>Użytkownik</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/user/user_view.css}" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
 <body>
-<p>Info o pracowniku:</p>
-<p>Imie:</p>
-<span th:text="${user.Name}"></span>
+<div class="container">
+        <div class="panel-group col-md-12" style="margin-top:60px">
+            <div class="panel panel-primary">
+                <div class="panel-heading" th:text="${user.name}">
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-12 info-body">
+                    <div class="row info-item col-md-offset-2 col-md-8">
+                        <div class="col-md-6"><strong>Imie:</strong></div>
+                        <div class="col-md-4 col-md-offset-2" th:text="${user.name}"></div>
+                    </div>
+                    <div class="row info-item col-md-offset-2 col-md-8">
+                        <div class="col-md-6"><strong>Nazwisko:</strong></div>
+                        <div class="col-md-4 col-md-offset-2" th:text="${user.lastName}"></div>
+                    </div>
+                    <div class="row info-item col-md-offset-2 col-md-8">
+                        <div class="col-md-6"><strong>Email:</strong></div>
+                        <div class="col-md-4 col-md-offset-2" th:text="${user.email}"></div>
+                    </div>
+                    <!--div class="row info-item col-md-offset-2 col-md-8">
+                        <div class="col-md-6"><strong>Rola:</strong></div>
+                        <div class="col-md-4 col-md-offset-2" th:text="${user.getRole}"></div>
+                    </--div> -->
+                    <div class="row info-item col-md-offset-2 col-md-8">
+                        <div class="col-md-6"><strong>Id:</strong></div>
+                        <div class="col-md-4 col-md-offset-2" th:text="${user.id}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
