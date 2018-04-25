@@ -17,8 +17,13 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" th:href="@{/users/list}" >Użytkownicy
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a th:href="@{/users/list}" >Lista użytkowników</a></li>
-                        <li><a th:href="@{/users/create}" >Dodaj użytkownika</a></li>
+                        <li>
+                                <form class="center-block" th:action="@{/users/list}" method="get">
+                                    <button class="btn btn-md btn-link" name="roleId"
+                                            type="Submit">Lista użytkowników</button>
+                                </form>
+                        </li>
+                        <li><a th:href="@{/users/create}"  >Dodaj użytkownika</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
