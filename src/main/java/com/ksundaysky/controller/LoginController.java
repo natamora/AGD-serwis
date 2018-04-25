@@ -21,7 +21,7 @@ public class LoginController {
     private UserService userService;
 
 
-    @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
+    @RequestMapping(value={ "/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
 
         ModelAndView modelAndView = new ModelAndView();
@@ -67,14 +67,19 @@ public class LoginController {
 //        return modelAndView;
 //    }
 
-    @RequestMapping(value="/home", method = RequestMethod.GET)
+    @RequestMapping(value={"/","/home"}, method = RequestMethod.GET)
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("userName", "Witaj " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("adminMessage","Zawartośc widoczna wyłącznie dla kierownika");
-        modelAndView.setViewName("/home");
+        if(user == null)
+            modelAndView.setViewName("/login");
+        else {
+            modelAndView.addObject("userName", "Witaj " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+            modelAndView.addObject("adminMessage", "Zawartośc widoczna wyłącznie dla kierownika");
+            modelAndView.setViewName("/home");
+        }
+
         return modelAndView;
     }
 
