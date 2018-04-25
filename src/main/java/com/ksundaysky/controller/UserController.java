@@ -115,6 +115,7 @@ public class UserController {
         return modelAndView;
     }
 
+
     @RequestMapping(value = {"/users/list"}, method = RequestMethod.GET)
     public ModelAndView test(@RequestParam Integer roleId) {
 
@@ -140,6 +141,7 @@ public class UserController {
         modelAndView.setViewName("/users/list");
         return modelAndView;
     }
+
 
 
     @RequestMapping(value = {"/users/delete/accept/{userId}"}, method = RequestMethod.GET)
