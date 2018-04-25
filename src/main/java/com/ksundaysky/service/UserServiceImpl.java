@@ -1,20 +1,16 @@
 package com.ksundaysky.service;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-
+import com.ksundaysky.model.User;
+import com.ksundaysky.repository.RoleRepository;
+import com.ksundaysky.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ksundaysky.model.Role;
-import com.ksundaysky.model.User;
-import com.ksundaysky.repository.RoleRepository;
-import com.ksundaysky.repository.UserRepository;
+import java.util.List;
 
 @Service("userService")
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -38,8 +34,11 @@ public class UserServiceImpl implements UserService{
 //        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
     }
+
     @Override
-    public User findUserById(int id) { return userRepository.findById(id);}
+    public User findUserById(int id) {
+        return userRepository.findById(id);
+    }
 
     @Override
     public void updateUser(User user) {
@@ -50,13 +49,14 @@ public class UserServiceImpl implements UserService{
 ////        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
     }
+
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
     @Override
-    public void deleteById(int id){
+    public void deleteById(int id) {
 
         userRepository.deleteById(id);
         //userRepository.delete(Long.valueOf((long)id));

@@ -1,35 +1,65 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Lista użytkowników</title>
+    <title>Lista pracowników</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/products/index.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1>Lista użytkowników</h1>
+<div th:replace="fragments/header :: header">...</div>
+<div class="container">
+    <div class="panel-group col-md-12" style="margin-top:60px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Lista pracowników
+            </div>
+        </div>
+        <div class="panel-body">
+            <p class="admin-message-text text-center" th:utext="${successMessage}"></p>
+            <div class="col-md-12 list-body">
+                <div class="row list-title">
+                    <div class="col-md-1" ><strong>Imię</strong></div>
+                    <div class="col-md-2" ><strong>Nazwisko</strong></div>
+                    <div class="col-md-2" ><strong>Email</strong></div>
+                    <div class="col-md-2" ><strong>Rola</strong></div>
 
+                    <div class="col-md-1" ><strong></strong></div>
 
-<table table-dark>
-    <tr>
-        <th>User ID</th>
-        <th>Name</th>
-        <th>info</th>
-        <th>delete</th>
-        <th>edit</th>
-    </tr>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.name}">
-        <td>
-            <a class="btn btn-primary" th:href="@{'/users/view/'+${user.id}}"> Info</a>
-        </td>
-        <td>
-            <a class="btn btn-primary" th:href="@{'/users/delete/'+${user.id}}"> Usuń</a>
-        </td>
-        <td>
-            <a class="btn btn-primary" th:href="@{'/users/edit/'+${user.id}}"> Edytuj</a>
-        </td>
-    </tr>
-</table>
+                </div>
+                <div class="row list-item" th:each="user:${users}">
+                    <div class="col-md-1" th:text="${user.name}"</div>
+                <div class="col-md-2" th:text="${user.lastName}" ></div>
+                <div class="col-md-2" th:text="${user.email}"></div>
+                <div class="col-md-2" th:text="${user.RoleName}"></div>
+                <div class="col-md-1">
+                    <a th:href="@{'/users/view/'+${user.id}}" >Zobacz</a>
+                    <a th:href="@{'/users/edit/'+${user.id}}" >Edytuj</a>
+                    <a th:href="@{'/users/delete/'+${user.id}}" >Usuń</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-heading">
+            Wyszukaj po stanowisku:
+        </div>
+
+        <div class="form-group blu-margin" th:object="${test}">
+            <form th:action="@{/users/list}" method="get">
+                <select class="form-control" th:name="roleId">
+                    <option value="0">Wszyscy</option>
+                    <option th:each="role : ${roles}"
+                            th:value="${role.getId()}"
+                            th:text="${role.getRole()}"></option>
+                </select>
+                <button type="submit">Filtruj</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
 </body>
 </html>
-
