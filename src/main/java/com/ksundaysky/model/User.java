@@ -1,5 +1,6 @@
 package com.ksundaysky.model;
 
+import java.sql.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,11 +13,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "user")
@@ -41,11 +46,20 @@ public class User {
     @Column(name = "last_name")
     @NotEmpty(message = "*Please provide your last name")
     private String lastName;
+    @Column(name = "experience")
+    //@NotBlank(message = "Provide your experience")
+    @Digits(integer=10, fraction=0, message = "provide valid experience")
+    private String experience;
+
+    @Column(name = "job_starting")
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
+    @NotNull(message = "provida valid date")
+    private Date jobStartingDate;
     @Column(name = "active")
     private int active;
     @Column(name = "role_id")
     private int role_id;
-    private String RoleName;
+
 
 //    @ManyToMany(cascade = CascadeType.ALL)
 //    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -63,7 +77,7 @@ public class User {
         this.lastName = lastName;
         this.active = active;
         this.role_id = role_id;
-        RoleName = roleName;
+
     }
 
     public int getId() {
@@ -114,12 +128,6 @@ public class User {
         this.active = active;
     }
 
-    public String getRoleName() {
-        return RoleName;
-    }
-    public void setRoleName(String roleName) {
-        RoleName = roleName;
-    }
 
 //    public Set<Role> getRoles() {
 //        return roles;
@@ -140,5 +148,21 @@ public class User {
 
     public void setRole_id(int role_id) {
         this.role_id = role_id;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public Date getJobStartingDate() {
+        return jobStartingDate;
+    }
+
+    public void setJobStartingDate(Date jobStartingDate) {
+        this.jobStartingDate = jobStartingDate;
     }
 }

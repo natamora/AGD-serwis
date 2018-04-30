@@ -76,6 +76,16 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="col-md-4 control-label">Numer Seryjny </label>
+                    <div class="col-sm-6">
+                        <input type="text" th:field="*{serial_number}"
+                               placeholder="Numer seryjny" class="form-control" /> <label
+                            th:if="${#fields.hasErrors('serial_number')}" th:errors="*{serial_number}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="col-md-4 control-label">Notatka </label>
                     <div class="col-sm-6">
                         <input type="text" th:field="*{note}"
