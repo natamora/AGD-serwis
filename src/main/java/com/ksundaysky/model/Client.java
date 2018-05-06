@@ -24,7 +24,7 @@ public class Client {
 
     @Column(name = "client_surname")
     @NotEmpty(message = "*Uzupełnij nazwisko klienta")
-    @Pattern(regexp="[a-zA-Z' ]", message = "*Niepoprawny format nazwiska")
+    @Pattern(regexp="[a-zA-Z' ]*", message = "*Niepoprawny format nazwiska")
     private String client_surname;
 
     @Column(name = "phone_number")
@@ -37,7 +37,7 @@ public class Client {
     private String city;
 
     @Column(name = "postcode")
-    @Pattern(regexp="\\d{2}-\\d{3}", message = "*Przykładowy kod pocztowy: 12-345")
+    @Pattern(regexp="(\\d{2}-\\d{3}){0,1}", message = "*Przykładowy kod pocztowy: 12-345")
     private String postcode;
 
     @Column(name = "street")

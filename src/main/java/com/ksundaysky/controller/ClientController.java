@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class ClientController {
     @Autowired
@@ -23,6 +26,24 @@ public class ClientController {
         Client client = new Client();
         modelAndView.addObject("client", client);
         modelAndView.setViewName("/clients/create");
+        return modelAndView;
+    }
+    @RequestMapping(value = "/clients/create", method = RequestMethod.POST)
+    public ModelAndView createNewProdct(@Valid Client client, BindingResult bindingResult) {
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("/clients/create");
+        }
+        else {
+            clientService.saveClient(client);
+            modelAndView.addObject("successMessage", "Klient został dodany");
+            modelAndView.addObject("client", new Client());
+            modelAndView.setViewName("/home");
+        }
+
+
         return modelAndView;
     }
 }
