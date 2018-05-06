@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,6 +44,22 @@ public class ClientController {
             modelAndView.setViewName("/home");
         }
 
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/clients")
+    public ModelAndView index(HttpServletRequest request)
+    {
+        ModelAndView modelAndView = new ModelAndView();
+        List<Client> clients = clientService.findAll();
+        modelAndView.addObject("clients",clients);
+        modelAndView.setViewName("/clients/index");
+        String successMessage = (String)request.getSession().getAttribute("successMessage");
+        if( successMessage != null) {
+            modelAndView.addObject("successMessage", successMessage);
+            request.getSession().removeAttribute("successMessage");
+        }
 
         return modelAndView;
     }
