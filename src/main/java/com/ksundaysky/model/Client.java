@@ -31,7 +31,7 @@ public class Client {
     private String client_surname;
 
     @Column(name = "phone_number")
-    @Digits(integer=10, fraction=0, message="*Numer telefonu powinien zawierać tylko cyfry")
+    @Digits(integer=10, fraction=0, message="*Numer telefonu powinien zawierać maksymalnie 10 cyfr")
     @NotEmpty(message = "*Uzupełnij numer telefonu")
     private String phone_number;
 
