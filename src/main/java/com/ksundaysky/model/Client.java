@@ -51,7 +51,7 @@ public class Client {
 
     @Column(name = "street_local_number")
     @Size(max=10, message = "Zbyt długi numer domu i lokalu")
-    @Pattern(regexp="[a-zA-Z0-9 ]",message = "*Niepoprawny numer domu")
+    @Pattern(regexp="[a-zA-Z0-9 ]*",message = "*Niepoprawny numer domu")
     private String street_local_number;
 
     public int getId() {
