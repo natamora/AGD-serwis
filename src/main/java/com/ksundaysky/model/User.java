@@ -59,6 +59,7 @@ public class User {
     private int active;
     @Column(name = "role_id")
     private int role_id;
+    private String RoleName;
 
 
 //    @ManyToMany(cascade = CascadeType.ALL)
@@ -77,6 +78,7 @@ public class User {
         this.lastName = lastName;
         this.active = active;
         this.role_id = role_id;
+        RoleName = roleName;
 
     }
 
@@ -141,6 +143,12 @@ public class User {
 //        this.roles.add(role);
 //    }
 
+    public String getRoleName() {
+        return RoleName;
+    }
+    public void setRoleName(String roleName) {
+        RoleName = roleName;
+    }
 
     public int getRole_id() {
         return role_id;
