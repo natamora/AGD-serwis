@@ -46,6 +46,7 @@
             </div>
             <a class="btn btn-primary" th:href="@{'/products/edit/'+${product.id}}"> Edytuj</a>
             <a th:href="@{/products}" >Powrót</a>
+            <a th:href="@{${product.id}+'/visits/create'}">Utwórz wizytę</a>
         </div>
     </div>
 </div>

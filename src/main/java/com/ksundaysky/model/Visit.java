@@ -38,12 +38,12 @@ public class Visit {
     @Column(name = "product_id")
     private int product_id;
 
-    //id klienta dla którego tworzona jest wizyta
-    @Column(name = "client_id")
-    private int client_id;
+//    //id klienta dla którego tworzona jest wizyta
+//    @Column(name = "client_id")
+//    private int client_id;
 
     //id serwisanta który wykona usługę
-    @Column(name = "user_id")
+    @Column(name = "employer_id")
     private int serwisant_id;
 
     // notatka służbowa dla serwisanta
@@ -62,4 +62,99 @@ public class Visit {
     @Column(name = "description_actual")
     private String actual_description;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+//    public int getClient_id() {
+//        return client_id;
+//    }
+//
+//    public void setClient_id(int client_id) {
+//        this.client_id = client_id;
+//    }
+
+    public int getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
+    }
+
+    public int getSerwisant_id() {
+        return serwisant_id;
+    }
+
+    public void setSerwisant_id(int serwisant_id) {
+        this.serwisant_id = serwisant_id;
+    }
+
+    public String getActual_description() {
+        return actual_description;
+    }
+
+    public void setActual_description(String actual_description) {
+        this.actual_description = actual_description;
+    }
+
+    public String getCosts() {
+        return costs;
+    }
+
+    public void setCosts(String costs) {
+        this.costs = costs;
+    }
+
+    public String getPick_up_date() {
+        return pick_up_date;
+    }
+
+    public void setPick_up_date(String pick_up_date) {
+        this.pick_up_date = pick_up_date;
+    }
+
+    public String getReceipt_date() {
+        return receipt_date;
+    }
+
+    public void setReceipt_date(String receipt_date) {
+        this.receipt_date = receipt_date;
+    }
+
+    public String getReceipt_type() {
+        return receipt_type;
+    }
+
+    public void setReceipt_type(String receipt_type) {
+        this.receipt_type = receipt_type;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getEstimated_description() {
+        return estimated_description;
+    }
+
+    public void setEstimated_description(String estimated_description) {
+        this.estimated_description = estimated_description;
+    }
+
+    public String getRepair_date() {
+        return repair_date;
+    }
+
+    public void setRepair_date(String repair_date) {
+        this.repair_date = repair_date;
+    }
 }

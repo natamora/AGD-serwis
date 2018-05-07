@@ -22,7 +22,7 @@ public class ClientController {
     ClientService clientService;
 
     @RequestMapping(value = {"/clients/create"}, method = RequestMethod.GET)
-    public ModelAndView createNewProdct() {
+    public ModelAndView createNewClient() {
         ModelAndView modelAndView = new ModelAndView();
         Client client = new Client();
         modelAndView.addObject("client", client);
@@ -30,7 +30,7 @@ public class ClientController {
         return modelAndView;
     }
     @RequestMapping(value = "/clients/create", method = RequestMethod.POST)
-    public ModelAndView createNewProdct(@Valid Client client, BindingResult bindingResult) {
+    public ModelAndView createNewClient(@Valid Client client, BindingResult bindingResult) {
 
         ModelAndView modelAndView = new ModelAndView();
 
