@@ -1,3 +1,0 @@
-# feat, style : SAGDD89, SAGDD90, SAGDD93: Edycja klienta, usuwanie klienta, szczegoly klienta
-
-
