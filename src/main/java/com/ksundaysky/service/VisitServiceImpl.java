@@ -24,4 +24,9 @@ public class VisitServiceImpl implements VisitService{
     public Visit findVisitById(int id) {
         return visitRepository.findById(id);
     }
+
+    @Override
+    public List<Visit> findAll() {
+        return visitRepository.findAll();
+    }
 }

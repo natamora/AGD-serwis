@@ -6,6 +6,7 @@ import com.ksundaysky.model.User;
 import com.ksundaysky.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +68,22 @@ public class VisitController {
             modelAndView.setViewName("/home");
         }
 
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/visits")
+    public ModelAndView index(HttpServletRequest request)
+    {
+        ModelAndView modelAndView = new ModelAndView();
+        List<Visit> visits = visitService.findAll();
+        modelAndView.addObject("visits",visits);
+        modelAndView.setViewName("products/visits/index");
+        String successMessage = (String)request.getSession().getAttribute("successMessage");
+        if( successMessage != null) {
+            modelAndView.addObject("successMessage", successMessage);
+            request.getSession().removeAttribute("successMessage");
+        }
 
         return modelAndView;
     }
