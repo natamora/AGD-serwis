@@ -23,6 +23,8 @@ public class Visit {
     private String receipt_type;
 
     //data przywiezienia lub odbioru sprzętu od klienta
+    //@Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}")
+   // @NotEmpty(message = "Uzupełnij datę")
     @Column(name = "receipt_date")
     private String receipt_date;
 
@@ -38,9 +40,9 @@ public class Visit {
     @Column(name = "product_id")
     private int product_id;
 
-//    //id klienta dla którego tworzona jest wizyta
-//    @Column(name = "client_id")
-//    private int client_id;
+    //id klienta dla którego tworzona jest wizyta
+    @Column(name = "client_id")
+    private int client_id;
 
     //id serwisanta który wykona usługę
     @Column(name = "employer_id")
@@ -56,6 +58,8 @@ public class Visit {
 
     // szacowany opis problemu (rejestrujacy)
     @Column(name = "description_estimated")
+//    @NotEmpty(message = "Uzupełnij opis")
+//    @Size(max=255, message="Zbyt dluga wiadomosc")
     private String estimated_description;
 
     // faktyczny opis problemu (serwisant)
@@ -70,13 +74,13 @@ public class Visit {
         this.id = id;
     }
 
-//    public int getClient_id() {
-//        return client_id;
-//    }
-//
-//    public void setClient_id(int client_id) {
-//        this.client_id = client_id;
-//    }
+    public int getClient_id() {
+        return client_id;
+    }
+
+    public void setClient_id(int client_id) {
+        this.client_id = client_id;
+    }
 
     public int getProduct_id() {
         return product_id;

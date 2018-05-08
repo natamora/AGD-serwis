@@ -25,13 +25,24 @@
                   th:object="${visit}" method="post" class="form-horizontal"
                   role="form">
 
+                <!--<div class="form-group">-->
+                    <!--<label class="col-md-4 control-label">Id klienta</label>-->
+                    <!--<div class="col-sm-6">-->
+
+                        <!--<input type="text" th:field="*{client_id}" placeholder="Id klienta"-->
+                               <!--class="form-control" />-->
+                        <!--<label th:if="${#fields.hasErrors('client_id')}" th:errors="*{client_id}"-->
+                               <!--class="validation-message"></label>-->
+                    <!--</div>-->
+                <!--</div>-->
+
                 <div class="form-group">
                     <label class="col-md-4 control-label">Szacowany opis problemu</label>
                     <div class="col-sm-6">
 
                         <input type="text" th:field="*{estimated_description}" placeholder="Szacowany opis problemu"
                                class="form-control" />
-                        <label th:if="${#fields.hasErrors('note')}" th:errors="*{estimated_description}"
+                        <label th:if="${#fields.hasErrors('estimated_description')}" th:errors="*{estimated_description}"
                                class="validation-message"></label>
                     </div>
                 </div>
