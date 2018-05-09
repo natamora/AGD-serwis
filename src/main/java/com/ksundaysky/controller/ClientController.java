@@ -45,7 +45,7 @@ public class ClientController {
         else {
             clientService.saveClient(client);
             modelAndView.addObject("successMessage", "Klient został dodany");
-            modelAndView.addObject("client", new Client());
+           // modelAndView.addObject("client", new Client());
             modelAndView.setViewName("/home");
         }
 
