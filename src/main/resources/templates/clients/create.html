@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Dodawanie klienta</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+
+<body>
+<div th:replace="fragments/header :: header">...</div>
+<div class="container">
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Dodawanie klienta:
+            </div>
+        </div>
+        <div class="panel-body">
+            <form autocomplete="off" action="#" th:action="@{/clients/create}"
+                  th:object="${client}" method="post" class="form-horizontal"
+                  role="form">
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Imię</label>
+                    <div class="col-sm-6">
+
+                        <input type="text" th:field="*{client_name}" placeholder="Imie"
+                               class="form-control" />
+                        <label th:if="${#fields.hasErrors('client_name')}" th:errors="*{client_name}"
+                               class="validation-message"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Nazwisko</label>
+                    <div class="col-sm-6">
+
+                        <input type="text" th:field="*{client_surname}" placeholder="Nazwisko"
+                               class="form-control" />
+                        <label	th:if="${#fields.hasErrors('client_surname')}" th:errors="*{client_surname}"
+                                  class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Numer telefonu</label>
+                    <div class="col-sm-6">
+                        <input type="text" th:field="*{phone_number}" placeholder="Numer telefonu"
+                               class="form-control" /> <label
+                            th:if="${#fields.hasErrors('phone_number')}" th:errors="*{phone_number}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Ulica (opt)</label>
+                    <div class="col-sm-6">
+                        <input type="text" th:field="*{street}"
+                               placeholder="Ulica" class="form-control" /> <label
+                            th:if="${#fields.hasErrors('street')}" th:errors="*{street}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Numer domu/ numer lokalu (opt)</label>
+                    <div class="col-sm-6">
+                        <input type="text" th:field="*{street_local_number}"
+                               placeholder="Numer domu/ numer lokalu" class="form-control" /> <label
+                            th:if="${#fields.hasErrors('street_local_number')}" th:errors="*{street_local_number}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Kod pocztowy (opt) </label>
+                    <div class="col-sm-6">
+                        <input type="text" th:field="*{postcode}"
+                               placeholder="Kod pocztowy" class="form-control" /> <label
+                            th:if="${#fields.hasErrors('postcode')}" th:errors="*{postcode}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Miasto (opt) </label>
+                    <div class="col-sm-6">
+                        <input type="text" th:field="*{city}"
+                               placeholder="Miasto" class="form-control" /> <label
+                            th:if="${#fields.hasErrors('city')}" th:errors="*{city}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-7 col-md-offset-3">
+                        <button type="submit" class="btn btn-primary btn-block">Dodaj</button>
+                    </div>
+                </div>
+
+                <span th:utext="${successMessage}"></span>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
