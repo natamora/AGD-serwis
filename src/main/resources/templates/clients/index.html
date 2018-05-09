@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Produkty</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/products/index.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">...</div>
+<div class="container">
+    <div class="panel-group col-md-12" style="margin-top:60px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Zarządzaj klientami
+            </div>
+        </div>
+        <div class="panel-body">
+            <p class="admin-message-text text-center" th:utext="${successMessage}"></p>
+            <div class="col-md-12 list-body">
+                <div class="row list-title">
+                    <div class="col-md-1" ><strong>Id klienta</strong></div>
+                    <div class="col-md-2" ><strong>Imie</strong></div>
+                    <div class="col-md-3" ><strong>Nazwisko</strong></div>
+                    <div class="col-md-3" ><strong>Numer telefonu</strong></div>
+                    <div class="col-md-3" ><strong></strong></div>
+
+                </div>
+                <div class="row list-item" th:each="client:${clients}">
+                    <div class="col-md-1" th:text="${client.id}"</div>
+                <div class="col-md-2" th:text="${client.client_name}" ></div>
+                <div class="col-md-3" th:text="${client.client_surname}"></div>
+                <div class="col-md-3" th:text="${client.phone_number}"></div>
+                <div class="col-md-3">
+                    <a th:href="@{'clients/'+${client.id}}" >Zobacz</a>
+                    <a th:href="@{'clients/edit/'+${client.id}}" >Edytuj</a>
+                    <a th:href="@{'clients/delete/'+${client.id}}" >Usuń</a>
+                </div>
+            </div>
+        </div>
+        <a class="btn btn-primary" th:href="@{/clients/create}">Dodaj klienta</a>
+    </div>
+</div>
+</div>
+</body>
+</html>

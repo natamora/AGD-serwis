@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 
 
 @Entity
@@ -32,8 +33,19 @@ public class Product {
         private String lastName;
         @Column(name = "product_note")
         private String note;
+        @Column(name = "unique_number")
+        @Digits(integer=10, fraction=0, message = "provide valid serial number")
+        private String serial_number;
 
-        public String getNote() {
+    public String getSerial_number() {
+        return serial_number;
+    }
+
+    public void setSerial_number(String serial_number) {
+        this.serial_number = serial_number;
+    }
+
+    public String getNote() {
             return note;
         }
 
