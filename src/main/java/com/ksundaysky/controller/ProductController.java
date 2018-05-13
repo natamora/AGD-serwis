@@ -1,7 +1,6 @@
 package com.ksundaysky.controller;
 
 import com.ksundaysky.model.Product;
-import com.ksundaysky.model.Role;
 import com.ksundaysky.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,9 +33,15 @@ public class ProductController {
     public ModelAndView createNewProdct(@Valid Product product, BindingResult bindingResult) {
 
         ModelAndView modelAndView = new ModelAndView();
+        Product productExist = productService.findBySerialNumber(product.getSerial());
 
-          if (bindingResult.hasErrors()) {  
-            modelAndView.setViewName("/products/create");	
+        if(productExist != null)
+        {
+            bindingResult
+                    .rejectValue("serial","error.product","Ten numer jest już przypisany");
+        }
+          if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("/products/create");
         }	
         else {	
              productService.saveProduct(product);	             
