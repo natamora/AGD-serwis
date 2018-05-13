@@ -35,7 +35,7 @@ public class ProductController {
 
         ModelAndView modelAndView = new ModelAndView();
 
-          if (bindingResult.hasErrors()) {	
+          if (bindingResult.hasErrors()) {  
             modelAndView.setViewName("/products/create");	
         }	
         else {	
