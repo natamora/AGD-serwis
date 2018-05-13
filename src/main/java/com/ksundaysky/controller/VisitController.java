@@ -45,7 +45,7 @@ public class VisitController {
     }
 
     @RequestMapping(value = "/products/{id}/visits/create", method = RequestMethod.POST)
-    public ModelAndView createNewVisit( @Valid Visit visit,@PathVariable int id, BindingResult bindingResult) {
+    public ModelAndView createNewVisit( @Valid Visit visit,  BindingResult bindingResult, @PathVariable int id) {
 
         ModelAndView modelAndView = new ModelAndView();
 
@@ -55,7 +55,7 @@ public class VisitController {
                     .filter(user -> user.getRole_id() == 2)
                     .map(user -> new User(user.getId(),user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(), user.getRole_id()))
                     .collect(Collectors.toList());
-            //modelAndView.addObject("visit", visit);
+            modelAndView.addObject("visit", visit);
             modelAndView.addObject("product_id", id);
             modelAndView.addObject("serwisantList",serwisantList);
             modelAndView.setViewName("/products/visits/create");

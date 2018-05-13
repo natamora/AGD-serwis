@@ -23,8 +23,8 @@ public class Visit {
     private String receipt_type;
 
     //data przywiezienia lub odbioru sprzętu od klienta
-    //@Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}")
-   // @NotEmpty(message = "Uzupełnij datę")
+    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", message="Ustaw prawidłową datę!")
+    @NotEmpty(message = "Uzupełnij datę")
     @Column(name = "receipt_date")
     private String receipt_date;
 
@@ -58,7 +58,7 @@ public class Visit {
 
     // szacowany opis problemu (rejestrujacy)
     @Column(name = "description_estimated")
-//    @NotEmpty(message = "Uzupełnij opis")
+    @NotEmpty(message = "Uzupełnij opis")
 //    @Size(max=255, message="Zbyt dluga wiadomosc")
     private String estimated_description;
 
