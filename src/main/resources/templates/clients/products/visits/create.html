@@ -20,8 +20,7 @@
             </div>
         </div>
         <div class="panel-body">
-            <div th:text="${product_id}"></div>
-            <form autocomplete="off" action="#" th:action="@{|/products/${product_id}/visits/create|}"
+            <form autocomplete="off" action="#" th:action="@{|/clients/${client_id}/products/${product_id}/visits/create|}"
                   th:object="${visit}" method="post" class="form-horizontal"
                   role="form">
 
@@ -41,7 +40,7 @@
                     <div class="col-sm-6">
 
                         <input type="text" th:field="*{estimated_description}" placeholder="Szacowany opis problemu"
-                               class="form-control" />
+                               class="form-control" required/>
                         <label th:if="${#fields.hasErrors('estimated_description')}" th:errors="*{estimated_description}"
                                class="validation-message"></label>
                     </div>
@@ -52,7 +51,7 @@
                     <div class="col-sm-6">
 
                         <input type="datetime-local" th:field="*{receipt_date}" placeholder="Data odbioru sprzętu od klienta"
-                               class="form-control" />
+                               class="form-control"  required/>
                         <label th:if="${#fields.hasErrors('receipt_date')}" th:errors="*{receipt_date}"
                                class="validation-message"></label>
                     </div>

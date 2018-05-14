@@ -41,9 +41,9 @@ public class Visit {
     private int product_id;
 
     //id klienta dla którego tworzona jest wizyta
-    /*@Column(name = "client_id")
+    @Column(name = "client_id")
     private int client_id;
-*/
+
     //id serwisanta który wykona usługę
     @Column(name = "employer_id")
     private int serwisant_id;
@@ -59,8 +59,8 @@ public class Visit {
     // szacowany opis problemu (rejestrujacy)
     @Column(name = "description_estimated")
     @NotEmpty(message = "Uzupełnij opis")
-//    @Size(max=255, message="Zbyt dluga wiadomosc")
     private String estimated_description;
+//    @Size(max=255, message="Zbyt dluga wiadomosc")
 
     // faktyczny opis problemu (serwisant)
     @Column(name = "description_actual")
@@ -73,7 +73,7 @@ public class Visit {
     public void setId(int id) {
         this.id = id;
     }
-/*
+
     public int getClient_id() {
         return client_id;
     }
@@ -81,7 +81,7 @@ public class Visit {
     public void setClient_id(int client_id) {
         this.client_id = client_id;
     }
-*/
+
     public int getProduct_id() {
         return product_id;
     }

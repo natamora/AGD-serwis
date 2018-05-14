@@ -30,7 +30,7 @@
                     <div class="col-md-1" ><strong>Id produktu</strong></div>
                    <!-- <div class="col-md-1" ><strong>Id klienta</strong></div>-->
                     <div class="col-md-1" ><strong>Id serwisanta</strong></div>
-                    <div class="col-md-1" ><strong>Koszt wizyty</strong></div>
+                    <div class="col-md-1" ><strong>Id klienta</strong></div>
                     <div class="col-md-1" ><strong></strong></div>
 
                 </div>
@@ -43,11 +43,11 @@
                     <div class="col-md-1" th:text="${visit.product_id}"></div>
                     <!--<div class="col-md-2" th:text="${visit.client_id}" ></div>-->
                     <div class="col-md-1" th:text="${visit.serwisant_id}"></div>
-                    <div class="col-md-1" th:text="${visit.costs}"></div>
+                    <div class="col-md-1" th:text="${visit.client_id}"></div>
                     <div class="col-md-1">
-                        <a th:href="@{'visits/'+${visit.id}}" >Zobacz</a>
-                        <a th:href="@{'visits/edit/'+${visit.id}}" >Edytuj</a>
-                        <a th:href="@{'visits/delete/'+${visit.id}}" >Usuń</a>
+                        <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.product_id}+'/visits/'+${visit.id}}" >Zobacz</a>
+                        <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.product_id}+'/visits/edit/'+${visit.id}}" >Edytuj</a>
+                        <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.product_id}+'/visits/delete/'+${visit.id}}" >Usuń</a>
                     </div>
             </div>
         </div>

@@ -28,24 +28,25 @@ public class VisitController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = {"/products/{id}/visits/create"}, method = RequestMethod.GET)
-    public ModelAndView createNewVisit(@PathVariable int id) {
+    @RequestMapping(value = {"/clients/{client_id}/products/{id}/visits/create"}, method = RequestMethod.GET)
+    public ModelAndView createNewVisit(@PathVariable("id") int id, @PathVariable("client_id") int client_id) {
         ModelAndView modelAndView = new ModelAndView();
         Visit visit = new Visit();
-        //List<User> serwisantList = userService.findAll().stream().map(user -> new User());
+
         List<User> serwisantList = userService.findAll().stream()
                 .filter(user -> user.getRole_id() == 2)
                 .map(user -> new User(user.getId(),user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(), user.getRole_id()))
                 .collect(Collectors.toList());
         modelAndView.addObject("visit", visit);
         modelAndView.addObject("product_id", id);
+        modelAndView.addObject("client_id", client_id);
         modelAndView.addObject("serwisantList",serwisantList);
-        modelAndView.setViewName("/products/visits/create");
+        modelAndView.setViewName("/clients/products/visits/create");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/products/{id}/visits/create", method = RequestMethod.POST)
-    public ModelAndView createNewVisit( @Valid Visit visit,  BindingResult bindingResult, @PathVariable int id) {
+    @RequestMapping(value = "/clients/{client_id}/products/{id}/visits/create", method = RequestMethod.POST)
+    public ModelAndView createNewVisit( @Valid Visit visit,  BindingResult bindingResult, @PathVariable int id, @PathVariable("client_id") int client_id) {
 
         ModelAndView modelAndView = new ModelAndView();
 
@@ -57,10 +58,12 @@ public class VisitController {
                     .collect(Collectors.toList());
             modelAndView.addObject("visit", visit);
             modelAndView.addObject("product_id", id);
+            modelAndView.addObject("client_id",client_id);
             modelAndView.addObject("serwisantList",serwisantList);
-            modelAndView.setViewName("/products/visits/create");
+            modelAndView.setViewName("/clients/products/visits/create");
         }
         else {
+            visit.setClient_id(client_id);
             visit.setProduct_id(id);
             visitService.saveVisit(visit);
             modelAndView.addObject("successMessage", "Wizyta została dodana");
@@ -78,7 +81,7 @@ public class VisitController {
         ModelAndView modelAndView = new ModelAndView();
         List<Visit> visits = visitService.findAll();
         modelAndView.addObject("visits",visits);
-        modelAndView.setViewName("products/visits/index");
+        modelAndView.setViewName("/clients/products/visits/index");
         String successMessage = (String)request.getSession().getAttribute("successMessage");
         if( successMessage != null) {
             modelAndView.addObject("successMessage", successMessage);
