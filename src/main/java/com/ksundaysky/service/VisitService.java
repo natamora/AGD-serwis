@@ -8,4 +8,6 @@ public interface VisitService {
     public void saveVisit(Visit visit);
     public Visit findVisitById(int id);
     public List<Visit> findAll();
+    public List<Visit> findAllProductVisits(int id);
+
 }

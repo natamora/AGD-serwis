@@ -38,7 +38,7 @@ public class VisitController {
                 .map(user -> new User(user.getId(),user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(), user.getRole_id()))
                 .collect(Collectors.toList());
         modelAndView.addObject("visit", visit);
-        modelAndView.addObject("product_id", id);
+        modelAndView.addObject("productId", id);
         modelAndView.addObject("client_id", client_id);
         modelAndView.addObject("serwisantList",serwisantList);
         modelAndView.setViewName("/clients/products/visits/create");
@@ -57,7 +57,7 @@ public class VisitController {
                     .map(user -> new User(user.getId(),user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(), user.getRole_id()))
                     .collect(Collectors.toList());
             modelAndView.addObject("visit", visit);
-            modelAndView.addObject("product_id", id);
+            modelAndView.addObject("productId", id);
             modelAndView.addObject("client_id",client_id);
             modelAndView.addObject("serwisantList",serwisantList);
             modelAndView.setViewName("/clients/products/visits/create");
