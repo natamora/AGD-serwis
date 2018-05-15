@@ -159,12 +159,16 @@ public class VisitController {
 
     private void setVisitData(Visit visit) {
         Client client = clientService.findById(visit.getClient_id());
-        String clientNameSurname = client.getClient_name() + ' ' + client.getClient_surname();
-        visit.setClientNameSurname(clientNameSurname);
+        if(client!= null) {
+            String clientNameSurname = client.getClient_name() + ' ' + client.getClient_surname();
+            visit.setClientNameSurname(clientNameSurname);
+        }
         User serviceman = userService.findUserById(visit.getSerwisant_id());
-        visit.setServisantSurname(serviceman.getLastName());
+        if(serviceman != null)
+            visit.setServisantSurname(serviceman.getLastName());
         Product product = productService.findById(visit.getProduct_id());
-        visit.setProductName(product.getProduct_name());
+        if(product != null)
+            visit.setProductName(product.getProduct_name());
     }
 
 }
