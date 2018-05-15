@@ -78,6 +78,7 @@ public class User {
         this.active = active;
         this.role_id = role_id;
 
+        //RoleName = roleName;
        // RoleName = roleName;
         this.experience = experience;
         this.jobStartingDate = jobStartingDate;
