@@ -30,6 +30,13 @@ public class VisitServiceImpl implements VisitService{
         return visitRepository.findAll();
     }
 
+
+    public List<Visit> findAllProductVisits(int id){
+        return visitRepository.findAllByProductId(id);
+    }
+
+
+
     @Override
     public void update(Visit visit) {
 

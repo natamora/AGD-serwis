@@ -1,7 +1,9 @@
 package com.ksundaysky.controller;
 
 import com.ksundaysky.model.Product;
+import com.ksundaysky.model.Visit;
 import com.ksundaysky.service.ProductService;
+import com.ksundaysky.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,10 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+
+
+    @Autowired
+    VisitService visitService;
 
     @RequestMapping(value = {"/clients/{id}/products/create"}, method = RequestMethod.GET)
     public ModelAndView createNewProdct(@PathVariable int id) {
@@ -75,8 +81,8 @@ public class ProductController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/clients/{id}/products/edit/{product_id}")
-    public ModelAndView edit(@PathVariable("product_id") int id, @PathVariable("id") int client_id){
+    @RequestMapping(value = "/clients/{id}/products/edit/{productId}")
+    public ModelAndView edit(@PathVariable("productId") int id, @PathVariable("id") int client_id){
         Product product = productService.findById(id);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -144,12 +150,14 @@ public class ProductController {
     @RequestMapping(value="/clients/{id}/products/{id}")
     public ModelAndView show(@PathVariable int id){
         Product product = productService.findById(id);
+        List<Visit> visits = visitService.findAllProductVisits(id);
 
         ModelAndView modelAndView = new ModelAndView();
         if(product == null){	
             modelAndView.addObject("errorMessage","Produkt o danym id nie istnieje");	
         }
         modelAndView.addObject("product", product);
+        modelAndView.addObject("visits", visits);
         modelAndView.setViewName("/clients/products/show");
 
         return modelAndView;

@@ -46,6 +46,9 @@
                     <div class="col-md-1" th:text="${visit.clientNameSurname}"></div>
                     <div class="col-md-1">
                         <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.product_id}+'/visits/repair/'+${visit.id}}" >Edytuj naprawę</a>
+                        <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.productId}+'/visits/'+${visit.id}}" >Zobacz</a>
+                        <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.productId}+'/visits/edit/'+${visit.id}}" >Edytuj</a>
+                        <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.productId}+'/visits/delete/'+${visit.id}}" >Usuń</a>
                     </div>
             </div>
         </div>

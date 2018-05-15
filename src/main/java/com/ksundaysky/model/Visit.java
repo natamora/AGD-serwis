@@ -38,7 +38,7 @@ public class Visit {
 
     //id produktu którego tyczy się wizyta
     @Column(name = "product_id")
-    private int product_id;
+    public int productId;
 
     //id klienta dla którego tworzona jest wizyta
     @Column(name = "client_id")
@@ -115,11 +115,11 @@ public class Visit {
     }
 
     public int getProduct_id() {
-        return product_id;
+        return productId;
     }
 
     public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+        this.productId = product_id;
     }
 
     public int getSerwisant_id() {

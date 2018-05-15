@@ -12,4 +12,5 @@ public interface ProductService {
     public void updateProduct(Product product);
     public void deleteById(int id);
     public Product findBySerialNumber(String serial_number);
+
 }

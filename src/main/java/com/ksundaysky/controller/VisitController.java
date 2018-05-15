@@ -1,5 +1,6 @@
 package com.ksundaysky.controller;
 
+import com.ksundaysky.model.Product;
 import com.ksundaysky.model.Client;
 import com.ksundaysky.model.Product;
 import com.ksundaysky.model.Visit;
@@ -46,7 +47,7 @@ public class VisitController {
                 .map(user -> new User(user.getId(),user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(), user.getRole_id()))
                 .collect(Collectors.toList());
         modelAndView.addObject("visit", visit);
-        modelAndView.addObject("product_id", id);
+        modelAndView.addObject("productId", id);
         modelAndView.addObject("client_id", client_id);
         modelAndView.addObject("serwisantList",serwisantList);
         modelAndView.setViewName("/clients/products/visits/create");
@@ -65,7 +66,7 @@ public class VisitController {
                     .map(user -> new User(user.getId(),user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(), user.getRole_id()))
                     .collect(Collectors.toList());
             modelAndView.addObject("visit", visit);
-            modelAndView.addObject("product_id", id);
+            modelAndView.addObject("productId", id);
             modelAndView.addObject("client_id",client_id);
             modelAndView.addObject("serwisantList",serwisantList);
             modelAndView.setViewName("/clients/products/visits/create");
@@ -98,6 +99,20 @@ public class VisitController {
             modelAndView.addObject("successMessage", successMessage);
             request.getSession().removeAttribute("successMessage");
         }
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/clients/{client_id}/products/{product_id}/visits/{id}")
+    public ModelAndView show(@PathVariable int id){
+        Visit visit = visitService.findVisitById(id);
+
+        ModelAndView modelAndView = new ModelAndView();
+        if(visit == null){
+            modelAndView.addObject("errorMessage","Wizyta o danym id nie istnieje");
+        }
+        modelAndView.addObject("visit", visit);
+        modelAndView.setViewName("/clients/products/visits/show");
 
         return modelAndView;
     }
