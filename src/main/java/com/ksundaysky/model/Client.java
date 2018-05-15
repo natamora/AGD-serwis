@@ -20,14 +20,13 @@ public class Client {
 
     @Column(name = "client_name")
     @Size(max=20, message = "Zbyt długie imię - max 20 znaków")
-    @Pattern(regexp="[A-Za-z ]*", message="Możesz używać tylko liter i spacji")
     @NotEmpty(message = "*Uzupełnij imię klienta")
     private String client_name;
 
     @Column(name = "client_surname")
     @Size(max=30,message = "Zbyt długie nazwisko - max 30 znaków")
     @NotEmpty(message = "*Uzupełnij nazwisko klienta")
-    @Pattern(regexp="[a-zA-Z' ]*", message = "*Niepoprawny format nazwiska")
+
     private String client_surname;
 
     @Column(name = "phone_number")
@@ -36,7 +35,6 @@ public class Client {
     private String phone_number;
 
     @Column(name = "city")
-    @Pattern(regexp="[a-zA-Z- ]+", message = "*Poprawnie uzupełnij miasto")
     @Size(max=30, message = "*Zbyt długa nazwa miasta")
     private String city;
 
@@ -45,7 +43,6 @@ public class Client {
     private String postcode;
 
     @Column(name = "street")
-    @Pattern(regexp="[a-zA-Z-' ]+", message = "*Poprawnie uzupełnij ulicę")
     @Size(max=30, message = "Zbyt długa nazwa ulicy")
     private String street;
 

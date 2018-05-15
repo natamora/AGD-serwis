@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -41,18 +42,20 @@ public class User {
     @Transient
     private String password;
     @Column(name = "name")
+    @Size(max = 20, message = " Zbyt długie imię")
     @NotEmpty(message = "*Please provide your name")
     private String name;
     @Column(name = "last_name")
+    @Size(max=30,message = "Zbyt długie nazwisko - max 30 znaków")
     @NotEmpty(message = "*Please provide your last name")
     private String lastName;
     @Column(name = "experience")
     //@NotBlank(message = "Provide your experience")
-    @Digits(integer=10, fraction=0, message = "provide valid experience")
+    @Digits(integer=2, fraction=0, message = "provide valid experience")
     private String experience;
     @Column(name = "job_starting")
     //@DateTimeFormat(iso= DateTimeFormat.ISO.DATE)
-    @NotNull(message = "provida valid date")
+    @NotNull(message = "provide valid date")
     private Date jobStartingDate;
     @Column(name = "active")
     private int active;
