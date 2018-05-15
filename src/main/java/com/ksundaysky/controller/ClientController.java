@@ -1,7 +1,8 @@
 package com.ksundaysky.controller;
 
 import com.ksundaysky.model.Role;
-import com.ksundaysky.model.User;
+import com.ksundaysky.model.Product;
+import com.ksundaysky.service.ProductService;
 import org.springframework.stereotype.Controller;
 
 import com.ksundaysky.service.ClientService;
@@ -26,8 +27,11 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
+    @Autowired
+    private ProductService productService;
+
     @RequestMapping(value = {"/clients/create"}, method = RequestMethod.GET)
-    public ModelAndView createNewProdct() {
+    public ModelAndView createNewClient() {
         ModelAndView modelAndView = new ModelAndView();
         Client client = new Client();
         modelAndView.addObject("client", client);
@@ -35,7 +39,7 @@ public class ClientController {
         return modelAndView;
     }
     @RequestMapping(value = "/clients/create", method = RequestMethod.POST)
-    public ModelAndView createNewProdct(@Valid Client client, BindingResult bindingResult) {
+    public ModelAndView createNewClient(@Valid Client client, BindingResult bindingResult) {
 
         ModelAndView modelAndView = new ModelAndView();
 
@@ -148,7 +152,7 @@ public class ClientController {
     }
 
 
-    @RequestMapping(value = "/clients/show/{id}")
+    @RequestMapping(value = "/clients/{id}")
     public ModelAndView showClient(@PathVariable int id) {
 
         ModelAndView modelAndView = new ModelAndView();
@@ -157,6 +161,11 @@ public class ClientController {
         if(client == null){
             modelAndView.addObject("errorMessage", "Klient o danym id nie istnieje");
         }
+        List<Product> clientProductList = productService.findAll().stream()
+                .filter(product -> product.getClient_id() == id)
+                .map(product -> new Product(product.getId(),product.getProduct_name(),product.getBrand(),product.getModel(), product.getNote(),product.getSerial(),product.getClient_id()))
+                .collect(Collectors.toList());
+        modelAndView.addObject("products",clientProductList);
         modelAndView.addObject("client", client);
         modelAndView.setViewName("/clients/show");
         return modelAndView;

@@ -78,12 +78,21 @@ public class User {
         this.active = active;
         this.role_id = role_id;
 
-        RoleName = roleName;
+       // RoleName = roleName;
         this.experience = experience;
         this.jobStartingDate = jobStartingDate;
 
     }
+    public User(int id, String email, String password, String name, String lastName, int active, int role_id) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+        this.active = active;
+        this.role_id = role_id;
 
+    }
     public int getId() {
         return id;
     }
