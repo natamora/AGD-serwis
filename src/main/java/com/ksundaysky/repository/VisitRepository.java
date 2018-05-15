@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     Visit findById(int id);
-
     @Transactional
     Long deleteById(int id);
 }
