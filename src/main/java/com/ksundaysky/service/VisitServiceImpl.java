@@ -29,4 +29,11 @@ public class VisitServiceImpl implements VisitService{
     public List<Visit> findAll() {
         return visitRepository.findAll();
     }
+
+
+    public List<Visit> findAllProductVisits(int id){
+        return visitRepository.findAllByProductId(id);
+    }
+
+
 }

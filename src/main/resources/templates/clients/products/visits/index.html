@@ -40,14 +40,14 @@
                     <div class="col-md-2" th:text="${visit.receipt_date}"></div>
                     <div class="col-md-2" th:text="${visit.pick_up_date}"></div>
                     <div class="col-md-2" th:text="${visit.repair_date}"></div>
-                    <div class="col-md-1" th:text="${visit.product_id}"></div>
+                    <div class="col-md-1" th:text="${visit.productId}"></div>
                     <!--<div class="col-md-2" th:text="${visit.client_id}" ></div>-->
                     <div class="col-md-1" th:text="${visit.serwisant_id}"></div>
                     <div class="col-md-1" th:text="${visit.client_id}"></div>
                     <div class="col-md-1">
-                        <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.product_id}+'/visits/'+${visit.id}}" >Zobacz</a>
-                        <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.product_id}+'/visits/edit/'+${visit.id}}" >Edytuj</a>
-                        <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.product_id}+'/visits/delete/'+${visit.id}}" >Usuń</a>
+                        <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.productId}+'/visits/'+${visit.id}}" >Zobacz</a>
+                        <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.productId}+'/visits/edit/'+${visit.id}}" >Edytuj</a>
+                        <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.productId}+'/visits/delete/'+${visit.id}}" >Usuń</a>
                     </div>
             </div>
         </div>
