@@ -23,8 +23,7 @@ public class Product {
         @Column(name = "product_model")
         @NotEmpty(message = "*Uzupełnij model produktu")
         private String model;
-        @Column(name = "owner_name")
-        @NotEmpty(message = "*Uzupełnij imię właściciela")
+        @Column(name = "note")
         private String note;
         @Column(name = "unique_number")
         @Digits(integer=10, fraction=0, message = "provide valid serial number")

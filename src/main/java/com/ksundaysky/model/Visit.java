@@ -60,7 +60,7 @@ public class Visit {
     @Column(name = "description_estimated")
     @NotEmpty(message = "Uzupełnij opis")
     private String estimated_description;
-//    @Size(max=255, message="Zbyt dluga wiadomosc")
+    @Size(max=100, message="Zbyt dluga wiadomosc")
 
     // faktyczny opis problemu (serwisant)
     @Column(name = "description_actual")
