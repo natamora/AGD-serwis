@@ -1,8 +1,9 @@
 package com.ksundaysky.controller;
 
 import com.ksundaysky.model.Product;
-import com.ksundaysky.model.Role;
+import com.ksundaysky.model.Visit;
 import com.ksundaysky.service.ProductService;
+import com.ksundaysky.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -21,25 +22,39 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    @RequestMapping(value = {"/products/create"}, method = RequestMethod.GET)
-    public ModelAndView createNewProdct() {
+
+    @Autowired
+    VisitService visitService;
+
+    @RequestMapping(value = {"/clients/{id}/products/create"}, method = RequestMethod.GET)
+    public ModelAndView createNewProdct(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
         Product product = new Product();
         modelAndView.addObject("product", product);
-        modelAndView.setViewName("/products/create");
+        modelAndView.addObject("client_id", id);
+        modelAndView.setViewName("/clients/products/create");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/products/create", method = RequestMethod.POST)
-    public ModelAndView createNewProdct(@Valid Product product, BindingResult bindingResult) {
+    @RequestMapping(value = "/clients/{id}/products/create", method = RequestMethod.POST)
+    public ModelAndView createNewProdct(@Valid Product product, BindingResult bindingResult, @PathVariable int id) {
 
         ModelAndView modelAndView = new ModelAndView();
+        Product productExist = productService.findBySerialNumber(product.getSerial());
 
-          if (bindingResult.hasErrors()) {	
-            modelAndView.setViewName("/products/create");	
+        if(productExist != null)
+        {
+            bindingResult
+                    .rejectValue("serial","error.product","Ten numer jest już przypisany");
+        }
+          if (bindingResult.hasErrors()) {
+            //modelAndView.addObject("product", product);
+            modelAndView.addObject("client_id", id);
+            modelAndView.setViewName("clients/products/create");
         }	
-        else {	
-             productService.saveProduct(product);	             
+        else {
+            product.setClient_id(id);
+             productService.saveProduct(product);
              modelAndView.addObject("successMessage", "Produkt został dodany");	            
              modelAndView.addObject("product", new Product());	             
              modelAndView.setViewName("/home");	             
@@ -56,7 +71,7 @@ public class ProductController {
         ModelAndView modelAndView = new ModelAndView();
         List<Product> products = productService.findAll();
         modelAndView.addObject("products",products);
-        modelAndView.setViewName("/products/index");
+        modelAndView.setViewName("/clients/products/index");
         String successMessage = (String)request.getSession().getAttribute("successMessage");
         if( successMessage != null) {
             modelAndView.addObject("successMessage", successMessage);
@@ -66,8 +81,8 @@ public class ProductController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/products/edit/{id}")
-    public ModelAndView edit(@PathVariable int id){
+    @RequestMapping(value = "/clients/{id}/products/edit/{productId}")
+    public ModelAndView edit(@PathVariable("productId") int id, @PathVariable("id") int client_id){
         Product product = productService.findById(id);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -75,24 +90,24 @@ public class ProductController {
              modelAndView.addObject("errorMessage", "Produkt o danym id nie istnieje");	
         }
         modelAndView.addObject("product", product);
-        modelAndView.setViewName("/products/edit");
+        modelAndView.setViewName("/clients/products/edit");
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "/products/delete/{productId}")
-    public ModelAndView delete(@PathVariable int productId){
+    @RequestMapping(value = "/clients/{id}/products/delete/{productId}")
+    public ModelAndView delete(@PathVariable("productId") int productId, @PathVariable("id") int clientId){
         Product product = productService.findById(productId);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("product", product);
-        modelAndView.setViewName("/products/delete");
+        modelAndView.setViewName("/clients/products/delete");
 
         return modelAndView;
     }
 
 
-    @RequestMapping(value = {"/products/delete/accept/{productId}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/clients/{id}/products/delete/accept/{productId}"}, method = RequestMethod.GET)
     public ModelAndView deleteAccept( @PathVariable int productId) {
 
         ModelAndView modelAndView = new ModelAndView();
@@ -103,14 +118,14 @@ public class ProductController {
 
     }
 
-    @RequestMapping(value="/products/edit", method=RequestMethod.POST)
+    @RequestMapping(value="/clients/{id}/products/edit", method=RequestMethod.POST)
     public ModelAndView update(@Valid Product product, BindingResult bindingResult, HttpServletRequest request){
 
         Product productExists = productService.findById(product.getId());
         if (productExists != null) {
-            productExists.setName(product.getName());
+            //productExists.setName(product.getName());
             productExists.setBrand(product.getBrand());
-            productExists.setLastName(product.getLastName());
+            //productExists.setLastName(product.getLastName());
             productExists.setModel(product.getModel());
             productExists.setProduct_name(product.getProduct_name());
             productExists.setNote(product.getNote());
@@ -120,7 +135,7 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.addObject("product", product);
-            modelAndView.setViewName("/products/edit");
+            modelAndView.setViewName("/clients/products/edit");
 
             return modelAndView;
         }
@@ -132,16 +147,18 @@ public class ProductController {
         return new ModelAndView("redirect:/products");
     }
 
-    @RequestMapping(value="/products/{id}")
+    @RequestMapping(value="/clients/{id}/products/{id}")
     public ModelAndView show(@PathVariable int id){
         Product product = productService.findById(id);
+        List<Visit> visits = visitService.findAllProductVisits(id);
 
         ModelAndView modelAndView = new ModelAndView();
         if(product == null){	
             modelAndView.addObject("errorMessage","Produkt o danym id nie istnieje");	
         }
         modelAndView.addObject("product", product);
-        modelAndView.setViewName("/products/show");
+        modelAndView.addObject("visits", visits);
+        modelAndView.setViewName("/clients/products/show");
 
         return modelAndView;
     }
