@@ -23,9 +23,9 @@
         <br/>
 
         <input type="text" id="email" name="email"  th:placeholder="Email"
-               class="form-control" /> <br/>
+               class="form-control" required/> <br/>
         <input type="password"  th:placeholder="Hasło"
-               id="password" name="password" class="form-control" /> <br />
+               id="password" name="password" class="form-control" required/> <br />
 
         <div align="center" th:if="${param.error}">
             <p style="font-size: 20; color: #FF1C19;">Błędny email lub hasło</p>
