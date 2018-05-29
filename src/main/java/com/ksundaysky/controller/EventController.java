@@ -42,8 +42,8 @@ class EventController {
                 Date start = df.parse(visit.receipt_date_start);
                 System.out.println("**********************************************"+start+"************************************");
                 Date end  = df.parse(visit.receipt_date_end);
-                String title = visit.getNote();
-                String description = visit.getProductName() + " " +visit.getReceipt_type();
+                String title = visit.getEstimated_description();
+                String description = "bardzo wazne informacje ttaj";//visit.getProductName() + " " +visit.getReceipt_type();
                 //Long id =Long.parseLong( visit.getId());
 
                 Event event = new Event(id,title,description,visit.receipt_date_start,visit.receipt_date_end);
