@@ -39,13 +39,24 @@
                         <div class="col-md-6"><strong>Data rozpoczęcia:</strong></div>
                         <div class="col-md-4 col-md-offset-2" th:text="${user.jobStartingDate}"></div>
                     </div>
-                   
+
                     <div class="row info-item col-md-offset-2 col-md-8">
-                        <div class="col-md-6"><strong>Id:</strong></div>
-                        <div class="col-md-4 col-md-offset-2" th:text="${user.id}"></div>
+                        <div class="col-md-6"><strong>Dni pracujące:</strong></div>
+                        <!--<div class="col-md-4 col-md-offset-2">-->
+                            <!--th:if="${workdays.monday}" th:text="Monday"></div>-->
+                        <!--<div class="col-md-4 col-md-offset-2" th:if="${workdays.tuesday}" th:text="Tuesday"></div>-->
+                        <div class="col-md-4 col-md-offset-2">
+                            <div th:if="${workdays.monday}" th:text="Poniedziałek"></div>
+                            <div th:if="${workdays.tuesday}" th:text="Wtorek"></div>
+                            <div th:if="${workdays.wednesday}" th:text="Środa"></div>
+                            <div th:if="${workdays.thursday}" th:text="Czwartek"></div>
+                            <div th:if="${workdays.friday}" th:text="Piątek"></div>
+
+                        </div>
                     </div>
                 </div>
                 <a class="btn btn-primary" th:href="@{'/users/edit/'+${user.id}}"> Edytuj</a>
+                <a th:href="@{'/users/delete/'+${user.id}}" >Usuń</a>
             </div>
         </div>
     </div>

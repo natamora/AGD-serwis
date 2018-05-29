@@ -2,8 +2,11 @@ package com.ksundaysky.controller;
 
 import com.ksundaysky.model.Role;
 import com.ksundaysky.model.User;
+import com.ksundaysky.model.Workdays;
 import com.ksundaysky.service.RoleService;
 import com.ksundaysky.service.UserService;
+import com.ksundaysky.service.WorkdaysService;
+import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -25,6 +28,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private WorkdaysService workdaysService;
 
     @RequestMapping(value = {"/users/create"}, method = RequestMethod.GET)
     public ModelAndView createNewUser() {
@@ -56,6 +61,22 @@ public class UserController {
             modelAndView.addObject("role_map", roleList);
             modelAndView.setViewName("/users/create");
         } else {
+            String[] workdays = user.getSelectedWorkdays();
+            Workdays w = new Workdays();
+
+            for(String day : workdays)
+            {
+                switch (day){
+                    case "Monday": w.setMonday(true); break;
+                    case "Tuesday": w.setTuesday(true); break;
+                    case "Wednesday": w.setWednesday(true); break;
+                    case "Thursday": w.setThursday(true); break;
+                    case "Friday": w.setFriday(true); break;
+
+                }
+            }
+            workdaysService.saveWorkdays(w);
+            user.setWorkdays_id(w.getId());
             userService.saveUser(user);
             modelAndView.addObject("successMessage", "Pracownik został dodany");
             modelAndView.addObject("user", new User());
@@ -68,6 +89,23 @@ public class UserController {
     @RequestMapping(value = "/users/edit/{id}")
     public ModelAndView editUser(@PathVariable int id) {
         User user = userService.findUserById(id);
+        Workdays workdays = workdaysService.getWorkdaysById(user.getWorkdays_id());
+
+        int howMany_selected=0;
+        if(workdays.isMonday())  howMany_selected++;
+        if(workdays.isTuesday()) howMany_selected++;
+        if(workdays.isWednesday()) howMany_selected++;
+        if(workdays.isThursday()) howMany_selected++;
+        if(workdays.isFriday()) howMany_selected++;
+
+        String[] selected= new String[howMany_selected];
+        if(workdays.isMonday())  selected[--howMany_selected]="Monday";
+        if(workdays.isTuesday()) selected[--howMany_selected]="Tuesday";
+        if(workdays.isWednesday()) selected[--howMany_selected]="Wednesday";
+        if(workdays.isThursday()) selected[--howMany_selected]="Thursday";
+        if(workdays.isFriday()) selected[--howMany_selected]="Friday";
+
+        user.setSelectedWorkdays(selected);
 
         ModelAndView modelAndView = new ModelAndView();
         if(user == null){
@@ -78,6 +116,7 @@ public class UserController {
         List<Role> roleList = roleService.findAll();
         Map<Integer, String> roleMap = roleList.stream().collect(Collectors.toMap(Role::getId, Role::getRole));
         modelAndView.addObject("role_map", roleList);
+        modelAndView.addObject("workdays",workdays);
         //return new ModelAndView("/users/edit","user",user);
         return modelAndView;
     }
@@ -87,6 +126,26 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserById(user.getId());
         if (userExists != null) {
+            String[] workdays = user.getSelectedWorkdays();
+            Workdays w = workdaysService.getWorkdaysById(userExists.getWorkdays_id());
+            w.setMonday(false);
+            w.setThursday(false);
+            w.setTuesday(false);
+            w.setWednesday(false);
+            w.setFriday(false);
+            for(String day : workdays)
+            {
+                switch (day){
+                    case "Monday": w.setMonday(true); break;
+                    case "Tuesday": w.setTuesday(true); break;
+                    case "Wednesday": w.setWednesday(true); break;
+                    case "Thursday": w.setThursday(true); break;
+                    case "Friday": w.setFriday(true); break;
+
+                }
+            }
+            workdaysService.saveWorkdays(w);
+            user.setWorkdays_id(w.getId());
             userExists.setEmail(user.getEmail());
 //            userExists.setRoles(user.getRoles());
             userExists.setRole_id(user.getRole_id());
@@ -108,9 +167,11 @@ public class UserController {
 
         ModelAndView modelAndView = new ModelAndView();
         User user = userService.findUserById(userId);
+        Workdays workdays = workdaysService.getWorkdaysById(user.getWorkdays_id());
         if(user == null){
             modelAndView.addObject("errorMessage", "Użytkownik o danym id nie istnieje");
         }
+        modelAndView.addObject("workdays",workdays);
         modelAndView.addObject("user", user);
         modelAndView.setViewName("/users/delete");
 
@@ -150,6 +211,8 @@ public class UserController {
     public ModelAndView deleteAccept(@PathVariable int userId) {
 
         ModelAndView modelAndView = new ModelAndView();
+        User user= userService.findUserById(userId);
+        workdaysService.deleteById(user.getWorkdays_id());
         userService.deleteById(userId);
         modelAndView.setViewName("/home");
         modelAndView.addObject("successMessage", "Pracownik został usunięty");
@@ -161,11 +224,13 @@ public class UserController {
     @RequestMapping(value = "/users/view/{id}")
     public ModelAndView viewUser(@PathVariable int id) {
         User user = userService.findUserById(id);
+        Workdays workdays = workdaysService.getWorkdaysById(user.getWorkdays_id());
 
         ModelAndView modelAndView = new ModelAndView();
         if(user == null){
             modelAndView.addObject("errorMessage", "Użytkownik o danym id nie istnieje");
         }
+        modelAndView.addObject("workdays",workdays);
         modelAndView.addObject("user", user);
         modelAndView.setViewName("/users/view");
         return modelAndView;
