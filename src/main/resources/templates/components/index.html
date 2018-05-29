@@ -23,16 +23,14 @@
             <p class="admin-message-text text-center" th:utext="${successMessage}"></p>
             <div class="col-md-12 list-body">
                 <div class="row list-title">
-                    <div class="col-md-1" ><strong>Id</strong></div>
-                    <div class="col-md-2" ><strong>Nazwa</strong></div>
+                    <div class="col-md-3" ><strong>Nazwa</strong></div>
                     <div class="col-md-2" ><strong>Rodzaj</strong></div>
                     <div class="col-md-2" ><strong>Cena</strong></div>
                     <div class="col-md-1" ><strong></strong></div>
 
                 </div>
                 <div class="row list-item" th:each="component:${components}">
-                    <div class="col-md-1" th:text="${component.id}"</div>
-                <div class="col-md-2" th:text="${component.component_name}" ></div>
+                <div class="col-md-3" th:text="${component.component_name}" ></div>
                 <div class="col-md-2" th:text="${component.type}"></div>
                 <div class="col-md-2" th:text="${component.price}"></div>
                 <div class="col-md-1">
