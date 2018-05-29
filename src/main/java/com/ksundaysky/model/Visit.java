@@ -13,6 +13,8 @@ import javax.validation.constraints.Size;
 @Table(name = "visit")
 public class Visit {
 
+
+//    "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}", message="Ustaw prawidłową datę!")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "visit_id")
@@ -23,10 +25,20 @@ public class Visit {
     private String receipt_type;
 
     //data przywiezienia lub odbioru sprzętu od klienta
-    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", message="Ustaw prawidłową datę!")
+    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2}", message="Ustaw prawidłową datę!")
     @NotEmpty(message = "Uzupełnij datę")
     @Column(name = "receipt_date")
     private String receipt_date;
+
+    public String getTime_start() {
+        return time_start;
+    }
+
+    public void setTime_start(String time_start) {
+        this.time_start = time_start;
+    }
+
+    public String time_start;
 
     //data odbioru naprawionego sprzętu (?? potrzebne ??)
     @Column(name = "pick_up_date")

@@ -50,9 +50,20 @@
                     <label class="col-md-4 control-label">Data odbioru od klienta</label>
                     <div class="col-sm-6">
 
-                        <input type="datetime-local" th:field="*{receipt_date}" placeholder="Data odbioru sprzętu od klienta"
+                        <input type="text" th:field="*{receipt_date}" placeholder="Data odbioru sprzętu od klienta"
                                class="form-control"  required/>
                         <label th:if="${#fields.hasErrors('receipt_date')}" th:errors="*{receipt_date}"
+                               class="validation-message"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">czas odbioru od klienta</label>
+                    <div class="col-sm-6">
+
+                        <input type="time" th:field="*{time_start}" placeholder="Data odbioru sprzętu od klienta"
+                               class="form-control"  required/>
+                        <label th:if="${#fields.hasErrors('time_start')}" th:errors="*{time_start}"
                                class="validation-message"></label>
                     </div>
                 </div>

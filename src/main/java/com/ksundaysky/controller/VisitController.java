@@ -74,6 +74,9 @@ public class VisitController {
         else {
             visit.setClient_id(client_id);
             visit.setProduct_id(id);
+           // visit.setReceipt_date(visit.getReceipt_date().replace("T"," "));
+            visit.setReceipt_date(visit.getReceipt_date()+" "+visit.time_start+":00");
+            System.out.println("*****************************"+visit.getReceipt_date()+"****************************");
             visitService.saveVisit(visit);
             modelAndView.addObject("successMessage", "Wizyta została dodana");
             //modelAndView.addObject("visit", new Visit());
