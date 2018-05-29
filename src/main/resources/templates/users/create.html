@@ -94,6 +94,45 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-md-4 control-label">Dni pracujace:</label>
+                <div class="col-sm-6">
+                    <input type="checkbox"
+                           th:field="*{selectedWorkdays}"
+                    th:value="Monday" />
+                    <label
+                            id="selectedWorkdays1"
+                            th:text="Poniedziałek"></label>
+
+                    <input type="checkbox"
+                           th:field="*{selectedWorkdays}"
+                    th:value="Tuesday" />
+                    <label
+                            id="selectedWorkdays2"
+                            th:text="Wtorek"></label>
+
+                    <input type="checkbox"
+                           th:field="*{selectedWorkdays}"
+                           th:value="Wednesday" />
+                    <label
+                            id="selectedWorkdays3"
+                            th:text="Środa"></label>
+
+                    <input type="checkbox"
+                           th:field="*{selectedWorkdays}"
+                           th:value="Thursday" />
+                    <label
+                            id="selectedWorkdays4"
+                            th:text="Czwartek"></label>
+
+                    <input type="checkbox"
+                           th:field="*{selectedWorkdays}"
+                           th:value="Friday" />
+                    <label
+                            id="selectedWorkdays5"
+                            th:text="Piątek"></label>
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-md-7 col-md-offset-3">
                     <button type="submit" class="btn btn-primary btn-block">Dodaj</button>
                 </div>
