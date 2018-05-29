@@ -37,7 +37,7 @@
                 <div class="row list-item" th:each="visit:${visits}">
                     <div class="col-md-1" th:text="${visit.id}"</div>
                     <div class="col-md-1" th:text="${visit.receipt_type}" ></div>
-                    <div class="col-md-2" th:text="${visit.receipt_date}"></div>
+                    <div class="col-md-2" th:text="${visit.receipt_date_start}"></div>
                     <div class="col-md-2" th:text="${visit.pick_up_date}"></div>
                     <div class="col-md-2" th:text="${visit.repair_date}"></div>
                     <div class="col-md-1" th:text="${visit.productName}"></div>

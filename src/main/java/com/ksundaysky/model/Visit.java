@@ -6,8 +6,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 @Table(name = "visit")
@@ -25,20 +27,28 @@ public class Visit {
     private String receipt_type;
 
     //data przywiezienia lub odbioru sprzętu od klienta
-    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2}", message="Ustaw prawidłową datę!")
+    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}", message="Ustaw prawidłową datę! Wg wzoru: yyyy-MM-dd HH:mm")
     @NotEmpty(message = "Uzupełnij datę")
-    @Column(name = "receipt_date")
-    private String receipt_date;
+    @NotNull
+    @Column(name = "receipt_date_start")
+    public Date receipt_date_start;
 
-    public String getTime_start() {
-        return time_start;
+    public Date getReceipt_date_end() {
+        return receipt_date_end;
     }
 
-    public void setTime_start(String time_start) {
-        this.time_start = time_start;
+    public void setReceipt_date_end(Date receipt_date_end) {
+        this.receipt_date_end = receipt_date_end;
     }
 
-    public String time_start;
+    //data konca wizyty
+    @Temporal(TemporalType.TIMESTAMP)
+    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}", message="Ustaw prawidłową datę! Wg wzoru: yyyy-MM-dd HH:mm")
+    @NotEmpty(message = "Uzupełnij datę")
+    @NotNull
+    @Column(name = "receipt_date_end")
+    public Date receipt_date_end;
+
 
     //data odbioru naprawionego sprzętu (?? potrzebne ??)
     @Column(name = "pick_up_date")
@@ -78,6 +88,26 @@ public class Visit {
     @Column(name = "description_actual")
     private String actual_description;
 
+    public Visit(String receipt_type, Date receipt_date_start, Date receipt_date_end, String pick_up_date, String repair_date, int productId, int client_id, int serwisant_id, String note, String costs, String estimated_description, String actual_description, String clientNameSurname, String servisantSurname, String productName) {
+        this.receipt_type = receipt_type;
+        this.receipt_date_start = receipt_date_start;
+        this.receipt_date_end = receipt_date_end;
+        this.pick_up_date = pick_up_date;
+        this.repair_date = repair_date;
+        this.productId = productId;
+        this.client_id = client_id;
+        this.serwisant_id = serwisant_id;
+        this.note = note;
+        this.costs = costs;
+        this.estimated_description = estimated_description;
+        this.actual_description = actual_description;
+        this.clientNameSurname = clientNameSurname;
+        this.servisantSurname = servisantSurname;
+        this.productName = productName;
+    }
+
+    public Visit() {
+    }
 
     private String clientNameSurname;
 
@@ -166,12 +196,12 @@ public class Visit {
         this.pick_up_date = pick_up_date;
     }
 
-    public String getReceipt_date() {
-        return receipt_date;
+    public Date getReceipt_date_start() {
+        return receipt_date_start;
     }
 
-    public void setReceipt_date(String receipt_date) {
-        this.receipt_date = receipt_date;
+    public void setReceipt_date_start(Date receipt_date) {
+        this.receipt_date_start = receipt_date;
     }
 
     public String getReceipt_type() {
