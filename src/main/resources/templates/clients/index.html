@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <title>Produkty</title>
@@ -36,12 +37,12 @@
                 <div class="col-md-3" th:text="${client.phone_number}"></div>
                 <div class="col-md-3">
                     <a th:href="@{'clients/'+${client.id}}" >Zobacz</a>
-                    <a th:href="@{'clients/edit/'+${client.id}}" >Edytuj</a>
-                    <a th:href="@{'clients/delete/'+${client.id}}" >Usuń</a>
+                    <a th:href="@{'clients/edit/'+${client.id}}" sec:authorize="hasAnyAuthority('ADMIN','REJESTRUJACY')">Edytuj</a>
+                    <a th:href="@{'clients/delete/'+${client.id}}" sec:authorize="hasAnyAuthority('ADMIN','REJESTRUJACY')">Usuń</a>
                 </div>
             </div>
         </div>
-        <a class="btn btn-primary" th:href="@{/clients/create}">Dodaj klienta</a>
+        <a class="btn btn-primary" th:href="@{/clients/create}" sec:authorize="hasAnyAuthority('ADMIN','REJESTRUJACY')">Dodaj klienta</a>
     </div>
 </div>
 </div>

@@ -4,6 +4,7 @@ import com.ksundaysky.model.Component;
 import com.ksundaysky.model.Role;
 import com.ksundaysky.service.ComponentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ public class ComponentController {
     @Autowired
     ComponentService componentService;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value = {"/components/create"}, method = RequestMethod.GET)
     public ModelAndView createNewComponent() {
         ModelAndView modelAndView = new ModelAndView();
@@ -30,6 +32,7 @@ public class ComponentController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value = "/components/create", method = RequestMethod.POST)
     public ModelAndView createNewComponent(@Valid Component component, BindingResult bindingResult) {
 
@@ -51,7 +54,6 @@ public class ComponentController {
 
 
     @RequestMapping(value = "/components")
-
     public ModelAndView index(HttpServletRequest request)
     {
         ModelAndView modelAndView = new ModelAndView();
@@ -67,6 +69,7 @@ public class ComponentController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value = "/components/edit/{id}")
     public ModelAndView edit(@PathVariable int id){
         Component component = componentService.findById(id);
@@ -81,6 +84,7 @@ public class ComponentController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value = "/components/delete/{id}")
     public ModelAndView delete(@PathVariable int id){
         Component component = componentService.findById(id);
@@ -93,6 +97,7 @@ public class ComponentController {
     }
 
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value = {"/components/delete/accept/{id}"}, method = RequestMethod.GET)
     public ModelAndView deleteAccept( @PathVariable int id) {
 
@@ -104,6 +109,7 @@ public class ComponentController {
 
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value="/components/edit", method=RequestMethod.POST)
     public ModelAndView update(@Valid Component component, BindingResult bindingResult, HttpServletRequest request){
 

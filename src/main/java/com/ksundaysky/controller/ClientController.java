@@ -3,6 +3,7 @@ package com.ksundaysky.controller;
 import com.ksundaysky.model.Role;
 import com.ksundaysky.model.Product;
 import com.ksundaysky.service.ProductService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import com.ksundaysky.service.ClientService;
@@ -30,6 +31,7 @@ public class ClientController {
     @Autowired
     private ProductService productService;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = {"/clients/create"}, method = RequestMethod.GET)
     public ModelAndView createNewClient() {
         ModelAndView modelAndView = new ModelAndView();
@@ -38,6 +40,7 @@ public class ClientController {
         modelAndView.setViewName("/clients/create");
         return modelAndView;
     }
+    @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = "/clients/create", method = RequestMethod.POST)
     public ModelAndView createNewClient(@Valid Client client, BindingResult bindingResult) {
 
@@ -73,6 +76,7 @@ public class ClientController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = {"/clients/delete/{clientId}"}, method = RequestMethod.GET)
     public ModelAndView delete(@PathVariable int clientId) {
 
@@ -87,6 +91,7 @@ public class ClientController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = "/clients/edit/{id}")
     public ModelAndView editClient(@PathVariable int id) {
 
@@ -104,6 +109,7 @@ public class ClientController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = "/clients/edit", method = RequestMethod.POST)
     public ModelAndView updateClient(@Valid Client client, BindingResult bindingResult, HttpServletRequest request) {
 
@@ -140,6 +146,7 @@ public class ClientController {
     }
 
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = {"/clients/delete/accept/{userId}"}, method = RequestMethod.GET)
     public ModelAndView deleteAccept(@PathVariable int userId) {
 
@@ -150,6 +157,7 @@ public class ClientController {
         return modelAndView;
 
     }
+
 
 
     @RequestMapping(value = "/clients/{id}")
