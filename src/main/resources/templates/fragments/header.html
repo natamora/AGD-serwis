@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:security="http://www.w3.org/1999/xhtml">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" >
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+
 </head>
 <body>
+
     <nav class="navbar navbar-inverse" th:fragment="header">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" th:href="@{/home}">Serwis-AGD</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="dropdown">
+                <li class="dropdown" sec:authorize="hasAuthority('ADMIN')" >
                     <a class="dropdown-toggle" data-toggle="dropdown" th:href="@{/users/list}" >Użytkownicy
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -26,6 +30,7 @@
                         <li><a th:href="@{/users/create}"  >Dodaj użytkownika</a></li>
                     </ul>
                 </li>
+
                 <!--<li class="dropdown">-->
                     <!--<a class="dropdown-toggle" data-toggle="dropdown" th:href="@{/products}" >Produkty-->
                         <!--<span class="caret"></span></a>-->
@@ -38,7 +43,7 @@
                     <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a th:href="@{/components}" >Lista komponentów</a></li>
-                        <li><a th:href="@{/components/create}" >Dodaj komponent</a></li>
+                        <li><a th:href="@{/components/create}" sec:authorize="hasAnyAuthority('ADMIN','SERWISANT')" >Dodaj komponent</a></li>
                     </ul>
                 </li>
                 <li>

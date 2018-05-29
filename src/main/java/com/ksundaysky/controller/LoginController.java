@@ -2,6 +2,7 @@ package com.ksundaysky.controller;
 
 import javax.validation.Valid;
 
+import com.ksundaysky.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +20,8 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
 
 
     @RequestMapping(value={ "/login"}, method = RequestMethod.GET)
@@ -36,7 +39,7 @@ public class LoginController {
         return modelAndView;
     }
 
-
+/*
     @RequestMapping(value="/registration", method = RequestMethod.GET)
     public ModelAndView registration(){
         ModelAndView modelAndView = new ModelAndView();
@@ -45,7 +48,7 @@ public class LoginController {
         modelAndView.setViewName("registration");
         return modelAndView;
     }
-
+*/
 //    @RequestMapping(value = "/registration", method = RequestMethod.POST)
 //    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
 //        ModelAndView modelAndView = new ModelAndView();
@@ -72,11 +75,12 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
+
         if(user == null)
             modelAndView.setViewName("/login");
         else {
             modelAndView.addObject("userName", "Witaj " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-            modelAndView.addObject("adminMessage", "Zawartośc widoczna wyłącznie dla kierownika");
+            modelAndView.addObject("adminMessage", "Użytkownik " +  roleService.getRoleById(user.getRole_id()).getRole());
             modelAndView.setViewName("/home");
         }
 

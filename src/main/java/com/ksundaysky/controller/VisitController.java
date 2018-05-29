@@ -11,6 +11,7 @@ import com.ksundaysky.service.ProductService;
 import com.ksundaysky.service.VisitService;
 import com.ksundaysky.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,6 +41,7 @@ public class VisitController {
     @Autowired
     private ProductService productService;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = {"/clients/{client_id}/products/{id}/visits/create"}, method = RequestMethod.GET)
     public ModelAndView createNewVisit(@PathVariable("id") int id, @PathVariable("client_id") int client_id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -57,6 +59,7 @@ public class VisitController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = "/clients/{client_id}/products/{id}/visits/create", method = RequestMethod.POST)
     public ModelAndView createNewVisit( @Valid Visit visit,  BindingResult bindingResult, @PathVariable int id, @PathVariable("client_id") int client_id) {
 
@@ -150,6 +153,7 @@ public class VisitController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value = "/clients/{client_id}/products/{product_id}/visits/repair/{id}")
     public ModelAndView repair(@PathVariable("product_id") int product_id, @PathVariable("client_id") int client_id, @PathVariable("id") Integer id) {
 
@@ -166,6 +170,7 @@ public class VisitController {
 
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value = "/clients/{client_id}/products/{product_id}/visits/update", method = RequestMethod.POST)
     public ModelAndView update(@Valid Visit visit, BindingResult bindingResult, @PathVariable int product_id, @PathVariable("client_id") int client_id) {
 

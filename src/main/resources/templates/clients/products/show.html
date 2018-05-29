@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <title>Produkty</title>
@@ -48,19 +49,18 @@
 
 
 
-            <a class="btn btn-primary" th:href="@{'/clients/'+${product.client_id}+'/products/edit/'+${product.id}}"> Edytuj</a>
+            <a class="btn btn-primary" th:href="@{'/clients/'+${product.client_id}+'/products/edit/'+${product.id}}" sec:authorize="hasAnyAuthority('ADMIN','REJESTRUJACY')"> Edytuj</a>
             <a th:href="@{/products}" >Powrót</a>
-            <a th:href="@{'/clients/'+${product.client_id}+'/products/'+${product.id}+'/visits/create'}">Utwórz wizytę</a>
+            <a th:href="@{'/clients/'+${product.client_id}+'/products/'+${product.id}+'/visits/create'}" sec:authorize="hasAnyAuthority('ADMIN','REJESTRUJACY')">Utwórz wizytę</a>
         </div>
 
         <div class="panel panel-primary">
             <div class="panel-heading">
-                Lista wizyt
+                Lista wizyt:
             </div>
         </div>
 
         <div class="row list-title">
-            <div class="col-md-1" ><strong>Id</strong></div>
             <div class="col-md-2" ><strong>Tryb odbioru</strong></div>
             <div class="col-md-2" ><strong>Data odbioru od klienta</strong></div>
             <div class="col-md-2" ><strong>Data odbioru</strong></div>
@@ -72,7 +72,6 @@
 
         </div>
         <div class="row list-item" th:each="visit:${visits}">
-            <div class="col-md-1" th:text="${visit.id}"</div>
         <div class="col-md-2" th:text="${visit.receipt_type}" ></div>
         <div class="col-md-2" th:text="${visit.receipt_date_start}"></div>
         <div class="col-md-2" th:text="${visit.pick_up_date}"></div>
@@ -82,8 +81,7 @@
         <div class="col-md-1" th:text="${visit.client_id}"></div>
         <div class="col-md-1">
             <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.productId}+'/visits/'+${visit.id}}" >Zobacz</a>
-            <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.productId}+'/visits/edit/'+${visit.id}}" >Edytuj</a>
-            <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.productId}+'/visits/delete/'+${visit.id}}" >Usuń</a>
+
         </div>
     </div>
     </div>

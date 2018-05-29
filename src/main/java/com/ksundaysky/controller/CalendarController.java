@@ -14,6 +14,7 @@ import java.util.Date;
 @Controller
 class CalendarController {
 
+
     @RequestMapping(value="/calendar", method=RequestMethod.GET)
     public ModelAndView index() {
         return new ModelAndView("calendar");

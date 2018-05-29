@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <title>Wizyta</title>
@@ -14,7 +15,7 @@
 <div class="container">
     <div class="panel-group col-md-12" style="margin-top:60px">
         <div class="panel panel-primary">
-            <div class="panel-heading" th:text="'ID wizyty: ' + ${visit.id}">
+            <div class="panel-heading" th:text="Wizyta">
             </div>
         </div>
         <div class="panel-body">
@@ -46,9 +47,8 @@
 
             </div>
 
-            <a class="btn btn-primary" th:href="@{'/clients/'+${visit.client_id}+'/products/edit/'+${visit.product_id}+'/visits/edit/'+${visit.id}}"> Edytuj</a>
+            <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.product_id}+'/visits/repair/'+${visit.id}}" sec:authorize="hasAnyAuthority('ADMIN','SERWISANT')">Tryb naprawy</a>
             <a th:href="@{/visits}" >Powrót</a>
-            <a th:href="@{'/clients/'+${visit.client_id}+'/products/'+${visit.product_id}+'/visits/delete'+${visit.id}}">Usuń wizytę</a>
         </div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
     <title>Komponenty</title>
@@ -36,12 +37,12 @@
                 <div class="col-md-2" th:text="${component.price}"></div>
                 <div class="col-md-1">
                     <a th:href="@{'components/'+${component.id}}" >Zobacz</a>
-                    <a th:href="@{'components/edit/'+${component.id}}" >Edytuj</a>
-                    <a th:href="@{'components/delete/'+${component.id}}" >Usuń</a>
+                    <a th:href="@{'components/edit/'+${component.id}}" sec:authorize="hasAnyAuthority('ADMIN','SERWISANT')" >Edytuj</a>
+                    <a th:href="@{'components/delete/'+${component.id}}" sec:authorize="hasAnyAuthority('ADMIN','SERWISANT')" >Usuń</a>
                 </div>
             </div>
         </div>
-        <a class="btn btn-primary" th:href="@{/components/create}">Dodaj komponent</a>
+        <a class="btn btn-primary" th:href="@{/components/create}" sec:authorize="hasAnyAuthority('ADMIN','SERWISANT')">Dodaj komponent</a>
     </div>
 </div>
 </div>
