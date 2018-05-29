@@ -32,6 +32,11 @@ $(document).ready(function() {
 		events: {
 	        url: '/allevents',
 	        type: 'GET',
+//            data: {
+//                start: 'receipt_date_start',
+//                end: 'receipt_date_end',
+//               // title: 'visitId,'
+//            },
 	        error: function() {
 	            alert('there was an error while fetching events!');
 	        },

@@ -1,5 +1,7 @@
 package com.ksundaysky.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ksundaysky.model.*;
 import com.ksundaysky.model.Product;
 import com.ksundaysky.repository.EventRepository;
@@ -12,22 +14,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Controller
+//@Controller
+@RestController
 public class VisitController {
 
     @Autowired
@@ -110,25 +111,29 @@ public class VisitController {
     }
 
     @RequestMapping(value="/eventss", method=RequestMethod.GET)
-    public List<Visit> getEventsInRange() {
-        Date startDate = null;
-        Date endDate = null;
-        SimpleDateFormat inputDateFormat=new SimpleDateFormat("yyyy-MM-dd");
-
-//        try {
-//            startDate = inputDateFormat.parse(start);
-//        } catch (ParseException e) {
-//            throw new BadDateFormatException("bad start date: " + start);
+    public String getEventsInRange() {
+//        List<Visit> visits = visitService.findAll();
+//
+//        List<Event> events = new ArrayList<Event>();
+//
+        String jsonMsg = null;
+//        for(Visit visit : visits)
+//        {
+//            Event event = new Event();
+//            event.setStart(visit.getReceipt_date_start());
+//            event.setEnd(visit.getReceipt_date_end());
+//            event.setTitle("dziaaaaala");
+//            events.add(event);
 //        }
 //
+//        ObjectMapper mapper = new ObjectMapper();
 //        try {
-//            endDate = inputDateFormat.parse(end);
-//        } catch (ParseException e) {
-//            throw new BadDateFormatException("bad end date: " + end);
+//            jsonMsg =  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(events);
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
 //        }
-
-        //return eventRepository.findByDatesBetween(startDate, endDate);
-        return visitService.findAll();
+//
+        return jsonMsg;
     }
 
     @RequestMapping(value="/clients/{client_id}/products/{product_id}/visits/{id}")
