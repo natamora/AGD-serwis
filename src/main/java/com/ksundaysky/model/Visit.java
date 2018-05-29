@@ -13,6 +13,8 @@ import javax.validation.constraints.Size;
 @Table(name = "visit")
 public class Visit {
 
+
+//    "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}", message="Ustaw prawidłową datę!")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "visit_id")
@@ -23,10 +25,25 @@ public class Visit {
     private String receipt_type;
 
     //data przywiezienia lub odbioru sprzętu od klienta
-    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", message="Ustaw prawidłową datę!")
+    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}", message="Ustaw prawidłową datę! Wg wzoru: yyyy-MM-dd HH:mm")
     @NotEmpty(message = "Uzupełnij datę")
-    @Column(name = "receipt_date")
-    private String receipt_date;
+    @Column(name = "receipt_date_start")
+    public String receipt_date_start;
+
+    public String getReceipt_date_end() {
+        return receipt_date_end;
+    }
+
+    public void setReceipt_date_end(String receipt_date_end) {
+        this.receipt_date_end = receipt_date_end;
+    }
+
+    //data konca wizyty
+    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}", message="Ustaw prawidłową datę! Wg wzoru: yyyy-MM-dd HH:mm")
+    @NotEmpty(message = "Uzupełnij datę")
+    @Column(name = "receipt_date_end")
+    public String receipt_date_end;
+
 
     //data odbioru naprawionego sprzętu (?? potrzebne ??)
     @Column(name = "pick_up_date")
@@ -66,6 +83,26 @@ public class Visit {
     @Column(name = "description_actual")
     private String actual_description;
 
+    public Visit(String receipt_type, String receipt_date_start, String receipt_date_end, String pick_up_date, String repair_date, int productId, int client_id, int serwisant_id, String note, String costs, String estimated_description, String actual_description, String clientNameSurname, String servisantSurname, String productName) {
+        this.receipt_type = receipt_type;
+        this.receipt_date_start = receipt_date_start;
+        this.receipt_date_end = receipt_date_end;
+        this.pick_up_date = pick_up_date;
+        this.repair_date = repair_date;
+        this.productId = productId;
+        this.client_id = client_id;
+        this.serwisant_id = serwisant_id;
+        this.note = note;
+        this.costs = costs;
+        this.estimated_description = estimated_description;
+        this.actual_description = actual_description;
+        this.clientNameSurname = clientNameSurname;
+        this.servisantSurname = servisantSurname;
+        this.productName = productName;
+    }
+
+    public Visit() {
+    }
 
     private String clientNameSurname;
 
@@ -154,12 +191,12 @@ public class Visit {
         this.pick_up_date = pick_up_date;
     }
 
-    public String getReceipt_date() {
-        return receipt_date;
+    public String getReceipt_date_start() {
+        return receipt_date_start;
     }
 
-    public void setReceipt_date(String receipt_date) {
-        this.receipt_date = receipt_date;
+    public void setReceipt_date_start(String receipt_date) {
+        this.receipt_date_start = receipt_date;
     }
 
     public String getReceipt_type() {

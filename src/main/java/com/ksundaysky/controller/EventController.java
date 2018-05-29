@@ -1,12 +1,18 @@
 package com.ksundaysky.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ksundaysky.model.Event;
+import com.ksundaysky.model.Visit;
 import com.ksundaysky.repository.EventRepository;
+import com.ksundaysky.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,10 +21,41 @@ class EventController {
 
     @Autowired
     EventRepository eventRepository;
+    @Autowired
+    VisitService visitService;
 
     @RequestMapping(value="/allevents", method=RequestMethod.GET)
     public List<Event> allEvents() {
-        return eventRepository.findAll();
+
+        List<Visit> visits = visitService.findAll();
+
+        List<Event> events = new ArrayList<Event>();
+
+        Long id =new Long(1);
+        for(Visit visit : visits)
+        {
+            String pattern = "yyyy-MM-dd HH:mm";
+            DateFormat df = new SimpleDateFormat(pattern);
+            try {
+              //  System.out.println();
+
+                Date start = df.parse(visit.receipt_date_start);
+                System.out.println("**********************************************"+start+"************************************");
+                Date end  = df.parse(visit.receipt_date_end);
+                String title = visit.getEstimated_description();
+                String description = "bardzo wazne informacje ttaj";//visit.getProductName() + " " +visit.getReceipt_type();
+                //Long id =Long.parseLong( visit.getId());
+
+                Event event = new Event(id,title,description,visit.receipt_date_start,visit.receipt_date_end);
+                events.add(event);
+                id++;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return events;
     }
 
     @RequestMapping(value="/event", method=RequestMethod.POST)

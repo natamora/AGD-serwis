@@ -15,10 +15,10 @@ public class Event {
     private String description;
 
     @Column(name="start")
-    private Date start;
+    private String start;
 
     @Column(name="end")
-    private Date end;
+    private String end;
 
     public Long getId() {
         return id;
@@ -38,19 +38,19 @@ public class Event {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Date getStart() {
+    public String getStart() {
         return start;
     }
-    public void setStart(Date start) {
+    public void setStart(String start) {
         this.start = start;
     }
-    public Date getEnd() {
+    public String getEnd() {
         return end;
     }
-    public void setEnd(Date end) {
+    public void setEnd(String end) {
         this.end = end;
     }
-    public Event(Long id, String title, String description, Date start, Date end) {
+    public Event(Long id, String title, String description, String start, String end) {
         super();
         this.id = id;
         this.title = title;

@@ -6,6 +6,7 @@ import com.ksundaysky.repository.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class VisitServiceImpl implements VisitService{
     private VisitRepository visitRepository;
 
     @Override
+    @javax.transaction.Transactional
     public void saveVisit(Visit visit) {
         visitRepository.save(visit);
     }
