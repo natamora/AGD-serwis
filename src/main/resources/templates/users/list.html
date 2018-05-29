@@ -36,8 +36,7 @@
                     <div class="col-md-2" th:text="${user.name}"</div>
                 <div class="col-md-2" th:text="${user.lastName}" ></div>
                 <div class="col-md-2" th:text="${user.email}"></div>
-                <!--<div class="col-md-2" th:text="${user.RoleName}"></div>-->
-                <div class="col-md-2" th:text="${user.experience}"></div>
+                <div class="col-md-2" th:text="${roles.get(user.role_id-1).role}"></div>
                 <div class="col-md-2" th:text="${user.jobStartingDate}"></div>
                 <div class="col-md-1">
                     <a th:href="@{'/users/view/'+${user.id}}" >Zobacz</a>

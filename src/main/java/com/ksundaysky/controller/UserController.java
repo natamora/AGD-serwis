@@ -225,11 +225,12 @@ public class UserController {
     public ModelAndView viewUser(@PathVariable int id) {
         User user = userService.findUserById(id);
         Workdays workdays = workdaysService.getWorkdaysById(user.getWorkdays_id());
-
+        Role role = roleService.getRoleById(user.getRole_id());
         ModelAndView modelAndView = new ModelAndView();
         if(user == null){
             modelAndView.addObject("errorMessage", "Użytkownik o danym id nie istnieje");
         }
+        modelAndView.addObject("role",role);
         modelAndView.addObject("workdays",workdays);
         modelAndView.addObject("user", user);
         modelAndView.setViewName("/users/view");
