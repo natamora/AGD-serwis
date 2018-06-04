@@ -20,4 +20,9 @@ class CalendarController {
         return new ModelAndView("calendar");
     }
 
+    @RequestMapping(value="/calendar2", method=RequestMethod.GET)
+    public ModelAndView index2() {
+        return new ModelAndView("calendar2");
+    }
+
 }

@@ -3,12 +3,16 @@ package com.ksundaysky.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ksundaysky.model.Event;
+import com.ksundaysky.model.EventWorkdays;
 import com.ksundaysky.model.Visit;
+import com.ksundaysky.model.Workdays;
 import com.ksundaysky.repository.EventRepository;
 import com.ksundaysky.service.VisitService;
+import com.ksundaysky.service.WorkdaysService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,6 +27,11 @@ class EventController {
     EventRepository eventRepository;
     @Autowired
     VisitService visitService;
+
+    @Autowired
+    LoginController loginController;
+    @Autowired
+    WorkdaysService workdaysService;
 
     @RequestMapping(value="/allevents", method=RequestMethod.GET)
     public List<Event> allEvents() {
@@ -56,6 +65,47 @@ class EventController {
 
 
         return events;
+    }
+
+
+    @RequestMapping(value="/workDays", method=RequestMethod.GET)
+    public ArrayList<EventWorkdays> workDays() {
+
+
+        Workdays workdays = workdaysService.getWorkdaysById(loginController.loggedInUser.getWorkdays_id());
+
+
+        System.out.println(loginController.loggedInUser.getEmail());
+        ArrayList<Integer> arrayList = new ArrayList();
+        List<Event> events = new ArrayList<Event>();
+
+        if(workdays.isMonday())
+            arrayList.add(1);
+        if(workdays.isTuesday())
+            arrayList.add(2);
+        if(workdays.isWednesday())
+            arrayList.add(3);
+        if(workdays.isThursday())
+            arrayList.add(4);
+        if(workdays.isFriday())
+            arrayList.add(5);
+
+        int [] dow = new int[arrayList.size()];
+
+        for(int i=0; i<arrayList.size();i++)
+        {
+            dow[i]=arrayList.get(i);
+        }
+
+        System.out.println(arrayList.toString());
+
+
+
+        EventWorkdays event = new EventWorkdays("08:00","16:00",arrayList.toString(),"Working");
+
+        ArrayList<EventWorkdays> arr = new ArrayList<>();
+        arr.add(event);
+        return arr;
     }
 
     @RequestMapping(value="/event", method=RequestMethod.POST)
