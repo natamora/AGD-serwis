@@ -63,7 +63,7 @@ public class Visit {
 
     //id serwisanta który wykona usługę
     @Column(name = "employer_id")
-    private int serwisant_id;
+    private int employerId;
 
     // notatka służbowa dla serwisanta
     @Column(name = "note")
@@ -83,7 +83,7 @@ public class Visit {
     @Column(name = "description_actual")
     private String actual_description;
 
-    public Visit(String receipt_type, String receipt_date_start, String receipt_date_end, String pick_up_date, String repair_date, int productId, int client_id, int serwisant_id, String note, String costs, String estimated_description, String actual_description, String clientNameSurname, String servisantSurname, String productName) {
+    public Visit(String receipt_type, String receipt_date_start, String receipt_date_end, String pick_up_date, String repair_date, int productId, int client_id, int employerId, String note, String costs, String estimated_description, String actual_description, String clientNameSurname, String servisantSurname, String productName) {
         this.receipt_type = receipt_type;
         this.receipt_date_start = receipt_date_start;
         this.receipt_date_end = receipt_date_end;
@@ -91,7 +91,7 @@ public class Visit {
         this.repair_date = repair_date;
         this.productId = productId;
         this.client_id = client_id;
-        this.serwisant_id = serwisant_id;
+        this.employerId = employerId;
         this.note = note;
         this.costs = costs;
         this.estimated_description = estimated_description;
@@ -159,12 +159,12 @@ public class Visit {
         this.productId = product_id;
     }
 
-    public int getSerwisant_id() {
-        return serwisant_id;
+    public int getEmployerId() {
+        return employerId;
     }
 
-    public void setSerwisant_id(int serwisant_id) {
-        this.serwisant_id = serwisant_id;
+    public void setEmployerId(int employerId) {
+        this.employerId = employerId;
     }
 
     public String getActual_description() {

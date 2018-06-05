@@ -58,6 +58,10 @@ public class VisitServiceImpl implements VisitService{
         return visitRepository.findAllByProductId(id);
     }
 
+    @Override
+    public List<Visit> findVisitsByEmployerId(int id) {
+       return visitRepository.findAllByEmployerId(id);
+    }
 
 // ten update jest do updatowania przez serwisanta, przy edycji wizyty przez rejestrujacego dodac nowy update, zeby w logach sie roznily miedzy soba
     @Override

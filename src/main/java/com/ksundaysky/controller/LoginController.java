@@ -23,6 +23,8 @@ public class LoginController {
     @Autowired
     private RoleService roleService;
 
+    public User loggedInUser;
+
 
     @RequestMapping(value={ "/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
@@ -81,6 +83,7 @@ public class LoginController {
         else {
             modelAndView.addObject("userName", "Witaj " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
             modelAndView.addObject("adminMessage", "Użytkownik " +  roleService.getRoleById(user.getRole_id()).getRole());
+            loggedInUser = user;
             modelAndView.setViewName("/home");
         }
 
