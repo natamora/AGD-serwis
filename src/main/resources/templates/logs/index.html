@@ -1,10 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="pl">
+
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Produkty</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/products/index.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-$END$
+<div th:replace="fragments/header :: header">...</div>
+<div class="container">
+    <div class="panel-group col-md-12" style="margin-top:60px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Logi
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12 list-body">
+                <div class="row list-title">
+                    <div class="col-md-2" ><strong>Czas wykonania akcji</strong></div>
+                    <div class="col-md-2" ><strong>Typ akcji</strong></div>
+                    <div class="col-md-2" ><strong>Nazwa tabeli</strong></div>
+                    <div class="col-md-3"><strong>Szczegóły</strong></div>
+                    <div class="col-md-2" ><strong>Autor</strong></div>
+
+                </div>
+                <div class="row list-item" th:each="log:${logs}">
+                    <div class="col-md-2" th:text="${log.timestamp}"></div>
+                    <div class="col-md-2" th:text="${log.action_type}"></div>
+                    <div class="col-md-2" th:text="${log.table_name}"></div>
+                    <div class="col-md-3" th:text="${log.message}"></div>
+                    <div class="col-md-2" th:text="${log.author_email}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

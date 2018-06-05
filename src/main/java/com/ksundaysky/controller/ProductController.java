@@ -60,7 +60,7 @@ public class ProductController {
              productService.saveProduct(product);
              modelAndView.addObject("successMessage", "Produkt został dodany");	            
              modelAndView.addObject("product", new Product());	             
-             modelAndView.setViewName("/home");	             
+             modelAndView.setViewName("/home");
         }
 
 
