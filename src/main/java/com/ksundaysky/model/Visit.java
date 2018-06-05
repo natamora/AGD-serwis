@@ -83,6 +83,12 @@ public class Visit {
     @Column(name = "description_actual")
     private String actual_description;
 
+    @Column(name = "component_price")
+    private String price;
+
+    @Column(name = "component_name")
+    private String component_name;
+
     public Visit(String receipt_type, String receipt_date_start, String receipt_date_end, String pick_up_date, String repair_date, int productId, int client_id, int serwisant_id, String note, String costs, String estimated_description, String actual_description, String clientNameSurname, String servisantSurname, String productName) {
         this.receipt_type = receipt_type;
         this.receipt_date_start = receipt_date_start;
@@ -98,6 +104,16 @@ public class Visit {
         this.actual_description = actual_description;
         this.clientNameSurname = clientNameSurname;
         this.servisantSurname = servisantSurname;
+        this.productName = productName;
+    }
+
+
+    public Visit(int visit_id, int client_id, int productId, String pick_up_date, String repair_date, String productName){
+        this.id = visit_id;
+        this.client_id = client_id;
+        this.productId = productId;
+        this.pick_up_date = pick_up_date;
+        this.repair_date = repair_date;
         this.productName = productName;
     }
 
@@ -230,4 +246,13 @@ public class Visit {
     public void setRepair_date(String repair_date) {
         this.repair_date = repair_date;
     }
+
+    public String getComponent_name() {
+        return component_name;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
 }

@@ -6,10 +6,7 @@ import com.ksundaysky.model.*;
 import com.ksundaysky.model.Product;
 import com.ksundaysky.repository.EventRepository;
 import com.ksundaysky.repository.VisitRepository;
-import com.ksundaysky.service.ClientService;
-import com.ksundaysky.service.ProductService;
-import com.ksundaysky.service.VisitService;
-import com.ksundaysky.service.UserService;
+import com.ksundaysky.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -40,6 +37,8 @@ public class VisitController {
     private ClientService clientService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ComponentService componentService;
 
     @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = {"/clients/{client_id}/products/{id}/visits/create"}, method = RequestMethod.GET)
@@ -112,6 +111,31 @@ public class VisitController {
 
         return modelAndView;
     }
+
+    @RequestMapping(value = "/services")
+    public ModelAndView test(@RequestParam Integer visitId) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        List<Component> components = componentService.findAll();
+        modelAndView.addObject("components",components);
+        List<Visit> visit;
+       // if ( visitId == null || visitId == 0) {
+            visit = visitService.findAll().stream()
+                    .map(visit -> new Visit(visit.getId(),visit.getClient_id(), visit.getProduct_id(), visit.getPick_up_date(), visit.getRepair_date(), visit.getProductName()))
+                    .collect(Collectors.toList());
+       // } else {
+        //     String component = componentService.getPrice();
+       //     visits= visitService.findAll().stream()
+        //           .filter(visit -> visit. getPrice() == visitId)
+         //          .collect(Collectors.toList());
+        }
+
+        modelAndView.addObject("visit", visit);
+        modelAndView.setViewName("/services");
+        return modelAndView;
+    }
+
+
 
     @RequestMapping(value="/eventss", method=RequestMethod.GET)
     public String getEventsInRange() {
