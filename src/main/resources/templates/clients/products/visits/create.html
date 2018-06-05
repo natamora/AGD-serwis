@@ -83,7 +83,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label">Dostępny serwisant: </label>
                     <div class="col-sm-6">
-                        <select class="form-control" th:field="*{serwisant_id}" >
+                        <select class="form-control" th:field="*{employerId}" >
                             <option  th:each="sopt:${serwisantList}"
                                      th:value="${sopt.id}" th:text="|${sopt.name} ${sopt.lastName} ${sopt.email}|">Japan</option>
                         </select>

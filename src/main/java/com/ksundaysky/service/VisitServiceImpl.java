@@ -37,6 +37,10 @@ public class VisitServiceImpl implements VisitService{
         return visitRepository.findAllByProductId(id);
     }
 
+    @Override
+    public List<Visit> findVisitsByEmployerId(int id) {
+       return visitRepository.findAllByEmployerId(id);
+    }
 
 
     @Override

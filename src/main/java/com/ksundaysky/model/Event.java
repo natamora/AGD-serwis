@@ -20,8 +20,15 @@ public class Event {
     @Column(name="end")
     private String end;
 
+    private String backgroundColor;
 
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
 
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
 
     public Long getId() {
         return id;
@@ -53,13 +60,14 @@ public class Event {
     public void setEnd(String end) {
         this.end = end;
     }
-    public Event(Long id, String title, String description, String start, String end) {
+    public Event(Long id, String title, String description, String start, String end,String backgroundColor) {
         super();
         this.id = id;
         this.title = title;
         this.description = description;
         this.start = start;
         this.end = end;
+        this.backgroundColor = backgroundColor;
     }
     public Event() {
         super();

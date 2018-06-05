@@ -201,7 +201,7 @@ public class VisitController {
             String clientNameSurname = client.getClient_name() + ' ' + client.getClient_surname();
             visit.setClientNameSurname(clientNameSurname);
         }
-        User serviceman = userService.findUserById(visit.getSerwisant_id());
+        User serviceman = userService.findUserById(visit.getEmployerId());
         if(serviceman != null)
             visit.setServisantSurname(serviceman.getLastName());
         Product product = productService.findById(visit.getProduct_id());

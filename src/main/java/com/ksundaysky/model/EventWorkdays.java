@@ -51,7 +51,7 @@ public class EventWorkdays {
     public EventWorkdays(String start, String end, String dow,String title) {
         this.start = start;
         this.end = end;
-        this.dow = dow;
+        this.dow = dow;//[ 1 , 2 ,3 , 4, 5]
         this.title = title;
     }
 }

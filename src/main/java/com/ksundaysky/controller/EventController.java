@@ -55,7 +55,42 @@ class EventController {
                 String description = "bardzo wazne informacje ttaj";//visit.getProductName() + " " +visit.getReceipt_type();
                 //Long id =Long.parseLong( visit.getId());
 
-                Event event = new Event(id,title,description,visit.receipt_date_start,visit.receipt_date_end);
+                Event event = new Event(id,title,description,visit.receipt_date_start,visit.receipt_date_end,null);
+                events.add(event);
+                id++;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return events;
+    }
+
+    @RequestMapping(value="/userEvents", method=RequestMethod.GET)
+    public List<Event> userEvents() {
+
+        List<Visit> visits = visitService.findVisitsByEmployerId(loginController.loggedInUser.getId());
+
+        List<Event> events = new ArrayList<Event>();
+
+        Long id =new Long(1);
+
+        for(Visit visit : visits)
+        {
+            String pattern = "yyyy-MM-dd HH:mm";
+            DateFormat df = new SimpleDateFormat(pattern);
+            try {
+                //  System.out.println();
+
+                Date start = df.parse(visit.receipt_date_start);
+                System.out.println("**********************************************"+start+"************************************");
+                Date end  = df.parse(visit.receipt_date_end);
+                String title = visit.getEstimated_description();
+                String description = "bardzo wazne informacje ttaj";//visit.getProductName() + " " +visit.getReceipt_type();
+                //Long id =Long.parseLong( visit.getId());
+
+                Event event = new Event(id,title,description,visit.receipt_date_start,visit.receipt_date_end,"#C0392B");
                 events.add(event);
                 id++;
             } catch (ParseException e) {

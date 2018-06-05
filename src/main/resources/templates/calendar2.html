@@ -29,11 +29,17 @@
                     center: 'title',
                     right: 'month,agendaWeek,agendaDay'
                 },
-                defaultDate: '2018-06-04',
+//                defaultDate: '2018-06-04',
                 editable: false,
                 eventLimit: false, // allow "more" link when too many events
+                weekends: false,
 
-                events:'/workDays'
+                eventSources: [
+                    'workDays',
+                    'userEvents'
+                    //'allevents'
+                ]
+//                events:'/workDays'
 //                    {
 //                    url: '/workDays',
 //
