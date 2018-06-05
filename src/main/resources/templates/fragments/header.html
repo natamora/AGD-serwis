@@ -59,7 +59,12 @@
                     <a th:href="@{/calendar}">Kalendarz</a>
                 </li>
                 <li>
+
                     <a th:href="@{/calendar2}">Harmonogram pracy</a>
+                </li>
+                 <li>
+                    <a th:href="@{/logs}" sec:authorize="hasAnyAuthority('ADMIN')" >Logi</a>
+
                 </li>
                 <!--<li class="dropdown">-->
                           <!---->

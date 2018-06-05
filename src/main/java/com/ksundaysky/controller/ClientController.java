@@ -1,13 +1,15 @@
 package com.ksundaysky.controller;
 
-import com.ksundaysky.model.Role;
-import com.ksundaysky.model.Product;
+import com.ksundaysky.model.*;
+import com.ksundaysky.service.LogService;
 import com.ksundaysky.service.ProductService;
+import com.ksundaysky.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import com.ksundaysky.service.ClientService;
-import com.ksundaysky.model.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,6 +33,12 @@ public class ClientController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private LogService logService;
+
+    @Autowired
+    private UserService userService;
 
     @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = {"/clients/create"}, method = RequestMethod.GET)
@@ -52,7 +61,6 @@ public class ClientController {
         else {
             clientService.saveClient(client);
             modelAndView.addObject("successMessage", "Klient został dodany");
-           // modelAndView.addObject("client", new Client());
             modelAndView.setViewName("/home");
         }
 
