@@ -220,7 +220,6 @@ public class VisitController {
         return modelAndView;
     }
 
-
     private void setVisitData(Visit visit) {
         Client client = clientService.findById(visit.getClient_id());
         if (client != null) {
