@@ -8,6 +8,9 @@ import javax.validation.constraints.Digits;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "visit")
@@ -46,10 +49,14 @@ public class Visit {
 
 
     //data odbioru naprawionego sprzętu (?? potrzebne ??)
+    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}", message="Ustaw prawidłową datę! Wg wzoru: yyyy-MM-dd HH:mm")
+    @NotEmpty(message = "Uzupełnij datę")
     @Column(name = "pick_up_date")
     private String pick_up_date;
 
     //data naprawy sprzętu
+    @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}", message="Ustaw prawidłową datę! Wg wzoru: yyyy-MM-dd HH:mm")
+    @NotEmpty(message = "Uzupełnij datę")
     @Column(name = "repair_date")
     private String repair_date;
 
@@ -83,7 +90,15 @@ public class Visit {
     @Column(name = "description_actual")
     private String actual_description;
 
-    public Visit(String receipt_type, String receipt_date_start, String receipt_date_end, String pick_up_date, String repair_date, int productId, int client_id, int employerId, String note, String costs, String estimated_description, String actual_description, String clientNameSurname, String servisantSurname, String productName) {
+   // @OneToMany(mappedBy = "visit")
+    //private Set<VisitComponent> visitComponentSet;
+   @ManyToMany( cascade = CascadeType.ALL)
+   @JoinTable(name = "visit_component", joinColumns = @JoinColumn(name="visit_id", referencedColumnName = "visit_id"),
+           inverseJoinColumns = @JoinColumn(name = "component_id", referencedColumnName = "component_id"))
+   private Set<Component> components;
+
+    public Visit(String receipt_type, String receipt_date_start, String receipt_date_end, String pick_up_date, String repair_date,
+                 int productId, int client_id, int employerId, String note, String costs, String estimated_description, String actual_description, String clientNameSurname, String servisantSurname, String productName) {
         this.receipt_type = receipt_type;
         this.receipt_date_start = receipt_date_start;
         this.receipt_date_end = receipt_date_end;
@@ -99,6 +114,15 @@ public class Visit {
         this.clientNameSurname = clientNameSurname;
         this.servisantSurname = servisantSurname;
         this.productName = productName;
+        this.components = new HashSet<>();
+    }
+
+    public Set<Component> getComponents(){
+        return components;
+    }
+
+    public void setComponents(Set<Component> components){
+        this.components = components;
     }
 
     public Visit() {
