@@ -4,12 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ksundaysky.model.*;
 import com.ksundaysky.model.Product;
+import com.ksundaysky.model.wrapper.VisitComponents;
 import com.ksundaysky.repository.EventRepository;
 import com.ksundaysky.repository.VisitRepository;
-import com.ksundaysky.service.ClientService;
-import com.ksundaysky.service.ProductService;
-import com.ksundaysky.service.VisitService;
-import com.ksundaysky.service.UserService;
+import com.ksundaysky.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -22,10 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 //@Controller
@@ -40,6 +35,11 @@ public class VisitController {
     private ClientService clientService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ComponentService componentService;
+
+    public VisitController() {
+    }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = {"/clients/{client_id}/products/{id}/visits/create"}, method = RequestMethod.GET)
@@ -49,19 +49,19 @@ public class VisitController {
 
         List<User> serwisantList = userService.findAll().stream()
                 .filter(user -> user.getRole_id() == 2)
-                .map(user -> new User(user.getId(),user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(), user.getRole_id()))
+                .map(user -> new User(user.getId(), user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(), user.getRole_id()))
                 .collect(Collectors.toList());
         modelAndView.addObject("visit", visit);
         modelAndView.addObject("productId", id);
         modelAndView.addObject("client_id", client_id);
-        modelAndView.addObject("serwisantList",serwisantList);
+        modelAndView.addObject("serwisantList", serwisantList);
         modelAndView.setViewName("/clients/products/visits/create");
         return modelAndView;
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = "/clients/{client_id}/products/{id}/visits/create", method = RequestMethod.POST)
-    public ModelAndView createNewVisit( @Valid Visit visit,  BindingResult bindingResult, @PathVariable int id, @PathVariable("client_id") int client_id) {
+    public ModelAndView createNewVisit(@Valid Visit visit, BindingResult bindingResult, @PathVariable int id, @PathVariable("client_id") int client_id) {
 
         ModelAndView modelAndView = new ModelAndView();
 
@@ -69,20 +69,19 @@ public class VisitController {
 
             List<User> serwisantList = userService.findAll().stream()
                     .filter(user -> user.getRole_id() == 2)
-                    .map(user -> new User(user.getId(),user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(), user.getRole_id()))
+                    .map(user -> new User(user.getId(), user.getEmail(), user.getPassword(), user.getName(), user.getLastName(), user.getActive(), user.getRole_id()))
                     .collect(Collectors.toList());
             modelAndView.addObject("visit", visit);
             modelAndView.addObject("productId", id);
-            modelAndView.addObject("client_id",client_id);
-            modelAndView.addObject("serwisantList",serwisantList);
+            modelAndView.addObject("client_id", client_id);
+            modelAndView.addObject("serwisantList", serwisantList);
             modelAndView.setViewName("/clients/products/visits/create");
-        }
-        else {
+        } else {
             visit.setClient_id(client_id);
             visit.setProduct_id(id);
-           // visit.setReceipt_date(visit.getReceipt_date().replace("T"," "));
+            // visit.setReceipt_date(visit.getReceipt_date().replace("T"," "));
             //visit.setReceipt_date(visit.getReceipt_date()+" "+visit.time_start);
-           // visit.receipt_date = visit.receipt_date+" "+visit.time_start;
+            // visit.receipt_date = visit.receipt_date+" "+visit.time_start;
             //System.out.println("*****************************"+visit.getReceipt_date()+"****************************");
             visitService.saveVisit(visit);
             modelAndView.addObject("successMessage", "Wizyta została dodana");
@@ -95,17 +94,16 @@ public class VisitController {
     }
 
     @RequestMapping(value = "/visits")
-    public ModelAndView index(HttpServletRequest request)
-    {
+    public ModelAndView index(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         List<Visit> visits = visitService.findAll();
-        for(Visit visit : visits){
+        for (Visit visit : visits) {
             setVisitData(visit);
         }
-        modelAndView.addObject("visits",visits);
+        modelAndView.addObject("visits", visits);
         modelAndView.setViewName("/clients/products/visits/index");
-        String successMessage = (String)request.getSession().getAttribute("successMessage");
-        if( successMessage != null) {
+        String successMessage = (String) request.getSession().getAttribute("successMessage");
+        if (successMessage != null) {
             modelAndView.addObject("successMessage", successMessage);
             request.getSession().removeAttribute("successMessage");
         }
@@ -113,7 +111,7 @@ public class VisitController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/eventss", method=RequestMethod.GET)
+    @RequestMapping(value = "/eventss", method = RequestMethod.GET)
     public String getEventsInRange() {
 //        List<Visit> visits = visitService.findAll();
 //
@@ -139,13 +137,13 @@ public class VisitController {
         return jsonMsg;
     }
 
-    @RequestMapping(value="/clients/{client_id}/products/{product_id}/visits/{id}")
-    public ModelAndView show(@PathVariable int id){
+    @RequestMapping(value = "/clients/{client_id}/products/{product_id}/visits/{id}")
+    public ModelAndView show(@PathVariable int id) {
         Visit visit = visitService.findVisitById(id);
 
         ModelAndView modelAndView = new ModelAndView();
-        if(visit == null){
-            modelAndView.addObject("errorMessage","Wizyta o danym id nie istnieje");
+        if (visit == null) {
+            modelAndView.addObject("errorMessage", "Wizyta o danym id nie istnieje");
         }
         modelAndView.addObject("visit", visit);
         modelAndView.setViewName("/clients/products/visits/show");
@@ -160,11 +158,25 @@ public class VisitController {
         ModelAndView modelAndView = new ModelAndView();
         Visit visit = visitService.findVisitById(id);
 
-        if(visit == null){
+        visit.receipt_date_end = visit.receipt_date_end.substring(0, 16);
+        visit.receipt_date_start = visit.receipt_date_start.substring(0, 16);
+
+        if (visit.getPick_up_date() != null)
+            visit.setPick_up_date(visit.getPick_up_date().substring(0, 16));
+        if (visit.getRepair_date() != null)
+            visit.setRepair_date(visit.getRepair_date().substring(0, 16));
+
+        if (visit == null) {
             modelAndView.addObject("errorMessage", "Wizyta o danym id nie istnieje");
         }
+        List<Component> componentList = componentService.findAll();
+
+        VisitComponents visitComponents = new VisitComponents(visit, componentList);
 
         modelAndView.addObject("visit", visit);
+        modelAndView.addObject("componentList", componentList);
+        modelAndView.addObject("visitComponents", visitComponents);
+
         modelAndView.setViewName("/clients/products/visits/repair");
         return modelAndView;
 
@@ -172,19 +184,32 @@ public class VisitController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value = "/clients/{client_id}/products/{product_id}/visits/update", method = RequestMethod.POST)
-    public ModelAndView update(@Valid Visit visit, BindingResult bindingResult, @PathVariable int product_id, @PathVariable("client_id") int client_id) {
+    public ModelAndView update(@ModelAttribute VisitComponents visitComponents, BindingResult bindingResult, @PathVariable int product_id, @PathVariable("client_id") int client_id) {
 
         ModelAndView modelAndView = new ModelAndView();
+        Visit visit = visitComponents.getVisit();
         Visit visitExists = visitService.findVisitById(visit.getId());
+        visitExists.receipt_date_end = visitExists.receipt_date_end.substring(0, 16);
+        visitExists.receipt_date_start = visitExists.receipt_date_start.substring(0, 16);
+
         if (visitExists != null) {
             visitExists.setActual_description(visit.getActual_description());
             visitExists.setRepair_date(visit.getRepair_date());
             visitExists.setPick_up_date(visit.getPick_up_date());
             visitExists.setCosts(visit.getCosts());
             visitExists.setNote(visit.getNote());
+            if (visitComponents.getComponents().size() > 0) {
+
+                Set<Component> set = visitComponents.getComponents().stream()
+                        .filter(component -> component.isSelected())
+                        .collect(Collectors.toSet());
+
+                visitExists.setComponents(set);
+            }
+
+
             visitService.update(visitExists);
-        }
-        else{
+        } else {
             modelAndView.addObject("visit", visit);
             modelAndView.setViewName("/clients/products/visits/repair");
             return modelAndView;
@@ -195,17 +220,18 @@ public class VisitController {
         return modelAndView;
     }
 
+
     private void setVisitData(Visit visit) {
         Client client = clientService.findById(visit.getClient_id());
-        if(client!= null) {
+        if (client != null) {
             String clientNameSurname = client.getClient_name() + ' ' + client.getClient_surname();
             visit.setClientNameSurname(clientNameSurname);
         }
         User serviceman = userService.findUserById(visit.getSerwisant_id());
-        if(serviceman != null)
+        if (serviceman != null)
             visit.setServisantSurname(serviceman.getLastName());
         Product product = productService.findById(visit.getProduct_id());
-        if(product != null)
+        if (product != null)
             visit.setProductName(product.getProduct_name());
     }
 

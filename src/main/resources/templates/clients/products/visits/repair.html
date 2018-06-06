@@ -7,11 +7,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $('#datetimepicker4').datepicker();
-        });
-    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 </head>
 
 
@@ -26,33 +23,26 @@
         </div>
         <div class="panel-body">
             <form autocomplete="off" action="#" th:action="@{|/clients/${client_id}/products/${product_id}/visits/update|}"
-                  th:object="${visit}" method="post" class="form-horizontal"
+                  th:object="${visitComponents}" method="post" class="form-horizontal"
                   role="form">
 
-                <!--<div class="form-group">-->
-                <!--<label class="col-md-4 control-label">Id klienta</label>-->
-                <!--<div class="col-sm-6">-->
 
-                <!--<input type="text" th:field="*{client_id}" placeholder="Id klienta"-->
-                <!--class="form-control" />-->
-                <!--<label th:if="${#fields.hasErrors('client_id')}" th:errors="*{client_id}"-->
-                <!--class="validation-message"></label>-->
-                <!--</div>-->
-                <!--</div>-->
-                <input type="hidden" th:field="*{client_id}" placeholder="id">
-                <input type="hidden" th:field="*{id}" placeholder="id">
-                <input type="hidden" th:field="*{receipt_type}" placeholder="id">
-                <input type="hidden" th:field="*{product_id}" placeholder="id">
-                <input type="hidden" th:field="*{serwisant_id}" placeholder="id">
-
+                <input type="hidden" th:field="*{visit.client_id}" placeholder="id">
+                <input type="hidden" th:field="*{visit.id}" placeholder="id">
+                <input type="hidden" th:field="*{visit.receipt_type}" placeholder="id">
+                <input type="hidden" th:field="*{visit.product_id}" placeholder="id">
+                <input type="hidden" th:field="*{visit.serwisant_id}" placeholder="id">
+                <input type="hidden" th:field="*{visit.receipt_date_start}" placeholder="id">
+                <input type="hidden" th:field="*{visit.receipt_date_end}" placeholder="id">
+                <input type="hidden" th:field="*{visit.estimated_description}" placeholder="id">
 
                 <div class="form-group">
                     <label class="col-md-4 control-label">Faktyczny opis problemu</label>
                     <div class="col-sm-6">
 
-                        <input type="text" th:field="*{actual_description}" placeholder="Faktyczny opis problemu"
+                        <input type="text" th:field="*{visit.actual_description}" placeholder="Faktyczny opis problemu"
                                class="form-control" required/>
-                        <label th:if="${#fields.hasErrors('actual_description')}" th:errors="*{actual_description}"
+                        <label th:if="${#fields.hasErrors('visit.actual_description')}" th:errors="*{visit.actual_description}"
                                class="validation-message"></label>
                     </div>
                 </div>
@@ -61,9 +51,9 @@
                     <label class="col-md-4 control-label">Data naprawy</label>
                     <div class="col-sm-6">
 
-                        <input type="datetime-local" th:field="*{repair_date}" placeholder="Data naprawy "
+                        <input type="text" th:field="*{visit.repair_date}" placeholder="Data naprawy "
                                class="form-control" id='datetimepicker4'  required/>
-                        <label th:if="${#fields.hasErrors('repair_date')}" th:errors="*{repair_date}"
+                        <label th:if="${#fields.hasErrors('visit.repair_date')}" th:errors="*{visit.repair_date}"
                                class="validation-message"></label>
                     </div>
                 </div>
@@ -72,9 +62,9 @@
                     <label class="col-md-4 control-label">Data odbioru sprzętu po naprawie</label>
                     <div class="col-sm-6">
 
-                        <input type="datetime-local" th:field="*{pick_up_date}" placeholder="Data odbioru "
+                        <input type="text" th:field="*{visit.pick_up_date}" placeholder="Data odbioru "
                                class="form-control"  required/>
-                        <label th:if="${#fields.hasErrors('pick_up_date')}" th:errors="*{pick_up_date}"
+                        <label th:if="${#fields.hasErrors('visit.pick_up_date')}" th:errors="*{visit.pick_up_date}"
                                class="validation-message"></label>
                     </div>
                 </div>
@@ -83,9 +73,9 @@
                     <label class="col-md-4 control-label">Koszt</label>
                     <div class="col-sm-6">
 
-                        <input type="text" th:field="*{costs}" placeholder=""
+                        <input type="text" th:field="*{visit.costs}" placeholder=""
                                class="form-control" required/>
-                        <label th:if="${#fields.hasErrors('costs')}" th:errors="*{costs}"
+                        <label th:if="${#fields.hasErrors('visit.costs')}" th:errors="*{visit.costs}"
                                class="validation-message"></label>
                     </div>
                 </div>
@@ -94,19 +84,51 @@
                     <label class="col-md-4 control-label">Notatka służbowa</label>
                     <div class="col-sm-6">
 
-                        <input type="text" th:field="*{note}" placeholder=""
+                        <input type="text" th:field="*{visit.note}" placeholder=""
                                class="form-control" required/>
-                        <label th:if="${#fields.hasErrors('note')}" th:errors="*{note}"
+                        <label th:if="${#fields.hasErrors('visit.note')}" th:errors="*{visit.note}"
                                class="validation-message"></label>
                     </div>
                 </div>
 
+                <label class="col-md-4 control-label">żyte komponenty:<br/></label>
+
+                <table class="table table-striped" id="myTable">
+                    <thead>
+                    <tr>
+                        <th></th>
+
+                        <th>Nazwa</th>
+                        <th>Typ</th>
+                        <th>Cena</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="re , stat : ${visitComponents.components}">
+
+                        <td>
+                            <input type="checkbox" th:field="*{components[__${stat.index}__].selected}" />
+                            <input type="hidden" th:field="*{components[__${stat.index}__].id}" />
+                            <input type="hidden" th:field="*{components[__${stat.index}__].component_name}" />
+                            <input type="hidden" th:field="*{components[__${stat.index}__].price}" />
+                            <input type="hidden" th:field="*{components[__${stat.index}__].type}" />
+                        </td>
+
+                        <td th:text="${re.getComponent_name()}"></td>
+                        <td th:text="${re.getType()}"></td>
+                        <td th:text="${re.getPrice()}"></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
 
                 <div class="form-group">
                     <div class="col-md-7 col-md-offset-3">
-                        <button type="submit" class="btn btn-primary btn-block">Dodaj</button>
+                        <button type="submit" class="btn btn-primary btn-block" >Dodaj</button>
                     </div>
                 </div>
+
 
                 <span th:utext="${successMessage}"></span>
             </form>
