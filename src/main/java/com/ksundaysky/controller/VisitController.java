@@ -176,8 +176,7 @@ public class VisitController {
         modelAndView.addObject("visit", visit);
         modelAndView.addObject("componentList", componentList);
         modelAndView.addObject("visitComponents", visitComponents);
-        modelAndView.addObject("errorMessageRepair"," ");
-        modelAndView.addObject("errorMessagePick", " ");
+
 
         modelAndView.setViewName("/clients/products/visits/repair");
         return modelAndView;
@@ -231,8 +230,6 @@ public class VisitController {
             visitService.update(visitExists);
         } else {
             modelAndView.addObject("visit", visit);
-            modelAndView.addObject("errorMessageRepair","");
-            modelAndView.addObject("errorMessagePick", "");
             modelAndView.setViewName("/clients/products/visits/repair");
             return modelAndView;
         }
