@@ -14,7 +14,8 @@
 <div class="container">
         <div class="panel-group col-md-12" style="margin-top:60px">
             <div class="panel panel-primary">
-                <div class="panel-heading" th:text="${user.name}">
+                <div class="panel-heading" th:text="${user.name}"  th:href="@{'/usersCalendar'}" >KALENDARZ> >
+
                 </div>
             </div>
             <div class="panel-body">
@@ -60,6 +61,7 @@
                     </div>
                 </div>
                 <a class="btn btn-primary" th:href="@{'/users/edit/'+${user.id}}"> Edytuj</a>
+                <a  class="btn btn-success" th:href="@{'/usersCalendar'}" >Kalendarz</a>
                 <a th:href="@{'/users/delete/'+${user.id}}" >Usuń</a>
             </div>
         </div>

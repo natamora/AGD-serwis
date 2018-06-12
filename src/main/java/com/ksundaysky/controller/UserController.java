@@ -1,8 +1,6 @@
 package com.ksundaysky.controller;
 
-import com.ksundaysky.model.Role;
-import com.ksundaysky.model.User;
-import com.ksundaysky.model.Workdays;
+import com.ksundaysky.model.*;
 import com.ksundaysky.service.RoleService;
 import com.ksundaysky.service.UserService;
 import com.ksundaysky.service.WorkdaysService;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,6 +29,8 @@ public class UserController {
     private RoleService roleService;
     @Autowired
     private WorkdaysService workdaysService;
+
+    public int userId;
 
     @RequestMapping(value = {"/users/create"}, method = RequestMethod.GET)
     public ModelAndView createNewUser() {
@@ -217,6 +218,7 @@ public class UserController {
 
     @RequestMapping(value = "/users/view/{id}")
     public ModelAndView viewUser(@PathVariable int id) {
+        this.userId=id;
         User user = userService.findUserById(id);
         Workdays workdays = workdaysService.getWorkdaysById(user.getWorkdays_id());
         Role role = roleService.getRoleById(user.getRole_id());
@@ -232,5 +234,9 @@ public class UserController {
 
 
     }
+
+
+
+
 
 }
