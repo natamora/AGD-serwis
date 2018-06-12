@@ -113,27 +113,9 @@ public class VisitController {
 
     @RequestMapping(value = "/eventss", method = RequestMethod.GET)
     public String getEventsInRange() {
-//        List<Visit> visits = visitService.findAll();
-//
-//        List<Event> events = new ArrayList<Event>();
-//
+
         String jsonMsg = null;
-//        for(Visit visit : visits)
-//        {
-//            Event event = new Event();
-//            event.setStart(visit.getReceipt_date_start());
-//            event.setEnd(visit.getReceipt_date_end());
-//            event.setTitle("dziaaaaala");
-//            events.add(event);
-//        }
-//
-//        ObjectMapper mapper = new ObjectMapper();
-//        try {
-//            jsonMsg =  mapper.writerWithDefaultPrettyPrinter().writeValueAsString(events);
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
-//
+
         return jsonMsg;
     }
 
