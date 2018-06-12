@@ -179,8 +179,8 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = {"/users/list"}, method = RequestMethod.GET)
-    public ModelAndView list(@RequestParam(name="roleId", required=true, defaultValue="0") Integer roleId) {
+    @RequestMapping(value = {"/users"}, method = RequestMethod.GET)
+    public ModelAndView index(@RequestParam(name="roleId", required=true, defaultValue="0") Integer roleId) {
 
         ModelAndView modelAndView = new ModelAndView();
         List<Role> roles = roleService.findAll();
@@ -195,7 +195,7 @@ public class UserController {
         }
 
         modelAndView.addObject("users", users);
-        modelAndView.setViewName("/users/list");
+        modelAndView.setViewName("/users/index");
         return modelAndView;
     }
 
