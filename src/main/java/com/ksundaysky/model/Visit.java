@@ -50,13 +50,11 @@ public class Visit {
 
     //data odbioru naprawionego sprzętu (?? potrzebne ??)
     @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}", message="Ustaw prawidłową datę! Wg wzoru: yyyy-MM-dd HH:mm")
-    @NotEmpty(message = "Uzupełnij datę")
     @Column(name = "pick_up_date")
     private String pick_up_date;
 
     //data naprawy sprzętu
     @Pattern(regexp = "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}", message="Ustaw prawidłową datę! Wg wzoru: yyyy-MM-dd HH:mm")
-    @NotEmpty(message = "Uzupełnij datę")
     @Column(name = "repair_date")
     private String repair_date;
 

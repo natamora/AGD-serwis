@@ -176,6 +176,8 @@ public class VisitController {
         modelAndView.addObject("visit", visit);
         modelAndView.addObject("componentList", componentList);
         modelAndView.addObject("visitComponents", visitComponents);
+        modelAndView.addObject("errorMessageRepair"," ");
+        modelAndView.addObject("errorMessagePick", " ");
 
         modelAndView.setViewName("/clients/products/visits/repair");
         return modelAndView;
@@ -194,6 +196,23 @@ public class VisitController {
 
         if (visitExists != null) {
             visitExists.setActual_description(visit.getActual_description());
+            if(!visit.getRepair_date().matches( "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}") || !visit.getPick_up_date().matches("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}")){
+                if(!visit.getRepair_date().matches( "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}")) {
+                    modelAndView.addObject("errorMessageRepair", "Ustaw prawidłową datę! Wg wzoru: yyyy-MM-dd HH:mm");
+                }
+                if(!visit.getPick_up_date().matches( "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}")){
+                    modelAndView.addObject("errorMessagePick", "Ustaw prawidłową datę! Wg wzoru: yyyy-MM-dd HH:mm");
+                }
+
+                List<Component> componentList = componentService.findAll();
+
+                modelAndView.addObject("visit", visit);
+                modelAndView.addObject("componentList", componentList);
+                modelAndView.addObject("visitComponents", visitComponents);
+                modelAndView.setViewName("/clients/products/visits/repair");
+
+                return modelAndView;
+            }
             visitExists.setRepair_date(visit.getRepair_date());
             visitExists.setPick_up_date(visit.getPick_up_date());
             visitExists.setCosts(visit.getCosts());
@@ -204,6 +223,7 @@ public class VisitController {
                         .filter(component -> component.isSelected())
                         .collect(Collectors.toSet());
 
+
                 visitExists.setComponents(set);
             }
 
@@ -211,6 +231,8 @@ public class VisitController {
             visitService.update(visitExists);
         } else {
             modelAndView.addObject("visit", visit);
+            modelAndView.addObject("errorMessageRepair","");
+            modelAndView.addObject("errorMessagePick", "");
             modelAndView.setViewName("/clients/products/visits/repair");
             return modelAndView;
         }
