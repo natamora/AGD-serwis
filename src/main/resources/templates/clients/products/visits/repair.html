@@ -56,8 +56,8 @@
 
                         <input type="text" th:field="*{visit.repair_date}" placeholder="Data naprawy "
                                class="form-control" id='datetimepicker4'  required/>
-                        <label th:if="${#fields.hasErrors('visit.repair_date')}" th:errors="*{visit.repair_date}"
-                               class="validation-message"></label>
+                        <label th:if="${errorMessageRepair != null}" > <span th:text="${errorMessageRepair}"></span></label>
+
                     </div>
                 </div>
 
@@ -67,8 +67,8 @@
 
                         <input type="text" th:field="*{visit.pick_up_date}" placeholder="Data odbioru "
                                class="form-control"  required/>
-                        <label th:if="${#fields.hasErrors('visit.pick_up_date')}" th:errors="*{visit.pick_up_date}"
-                               class="validation-message"></label>
+                        <label  th:if="${errorMessagePick != null}"  > <span th:text="${errorMessagePick}"></span></label>
+
                     </div>
                 </div>
 
