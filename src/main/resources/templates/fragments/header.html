@@ -22,10 +22,7 @@
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>
-                                <form class="center-block" th:action="@{/users/list}" method="get">
-                                    <button class="btn btn-md btn-link" name="roleId"
-                                            type="Submit">Lista użytkowników</button>
-                                </form>
+                            <a th:href="@{/users/list}">Lista użytkowników</a>
                         </li>
                         <li><a th:href="@{/users/create}"  >Dodaj użytkownika</a></li>
                     </ul>
