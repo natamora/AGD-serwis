@@ -1,10 +1,12 @@
 package com.ksundaysky.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -24,6 +26,20 @@ public class Component {
     @Column(name = "component_price")
     @NotEmpty(message = "*Uzupełnij cenę komponentu")
     private String price;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "components")
+    private Set<Visit> visits;
+
+    public Component() {
+    }
+
+    public Set<Visit> getVisits(){
+        return visits;
+    }
+
+    public void setVisits(Set<Visit> visits){
+        this.visits = visits;
+    }
 
     public int getId() {
         return id;
