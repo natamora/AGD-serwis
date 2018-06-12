@@ -63,10 +63,20 @@ public class User {
     private int role_id;
     private String RoleName;
 
+    @Column(name = "workdays_id")
+    private int workdays_id;
 
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-//    private Set<Role> roles;
+    @javax.persistence.Transient
+    String[] selectedWorkdays;
+
+    public String[] getSelectedWorkdays() {
+        return selectedWorkdays;
+    }
+
+    public void setSelectedWorkdays(String[] selectedWorkdays) {
+        this.selectedWorkdays = selectedWorkdays;
+    }
+
 
 
     public User() {
@@ -81,8 +91,7 @@ public class User {
         this.active = active;
         this.role_id = role_id;
 
-        //RoleName = roleName;
-       // RoleName = roleName;
+
         this.experience = experience;
         this.jobStartingDate = jobStartingDate;
 
@@ -146,18 +155,6 @@ public class User {
     }
 
 
-//    public Set<Role> getRoles() {
-//        return roles;
-//    }
-//
-//    public void setRoles(Set<Role> roles) {
-//        this.roles = roles;
-//    }
-//
-//    public void setRoles(Role role) {
-//        this.roles.add(role);
-//    }
-
     public String getRoleName() {
         return RoleName;
     }
@@ -187,5 +184,14 @@ public class User {
 
     public void setJobStartingDate(Date jobStartingDate) {
         this.jobStartingDate = jobStartingDate;
+    }
+
+    @javax.persistence.Transient
+    public int getWorkdays_id() {
+        return workdays_id;
+    }
+    @javax.persistence.Transient
+    public void setWorkdays_id(int workdays_id) {
+        this.workdays_id = workdays_id;
     }
 }

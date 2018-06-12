@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <link rel="stylesheet" href="tabulator.css">
+    <script type="text/javascript" src="tabulator.js"></script>
+
+
+<head>
+    <title>Usługi</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/services/index.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">...</div>
+<div class="container">
+    <div class="panel-group col-md-12" style="margin-top:60px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Lista usług
+            </div>
+        </div>
+        <div class="panel-body">
+            <p class="admin-message-text text-center" th:utext="${successMessage}"></p>
+            <div class="col-md-12 list-body">
+                <div id="wrapper"></div>
+                <table id="services">
+                    <thead>
+                    <tr>
+                        <th class="sortable">Data odbioru</th>
+                        <th class="sortable">Data naprawy</th>
+                        <th class="sortable">Produkt</th>
+                        <th class="sortable">Koszt serwisu</th>
+                        <th class="sortable">Serwisant</th>
+                        <th class="sortable">Klienet</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="visit:${visits}">
+                        <td th:text="${visit.pick_up_date}"</td>
+                        <td th:text="${visit.repair_date}"></td>
+                        <td th:text="${visit.productName}"></td>
+                        <td th:text="${visit.costs}"></td>
+                        <td th:text="${visit.servisantSurname}"></td>
+                        <td th:text="${visit.clientNameSurname}"</td>
+                    </tr>
+                    </tbody>
+                </table>
+                   <!-- <div class="row list-title">
+                        <div class="col-md-2" ><strong>Data odbioru</strong></div>
+                        <div class="col-md-2" ><strong>Data naprawy</strong></div>
+                        <div class="col-md-1" ><strong>Produkt</strong></div>
+                        <div class="col-md-1" ><strong>Koszt serwisu</strong></div>
+                        <div class="col-md-1" ><strong>Serwisant</strong></div>
+                        <div class="col-md-1" ><strong>Klient</strong></div>
+                        <div class="col-md-1" ><strong></strong></div>
+
+                    </div>
+                    <div class="row list-item" th:each="visit:${visits}">
+                        <div class="col-md-2" th:text="${visit.receipt_type}" ></div>
+                        <div class="col-md-2" th:text="${visit.pick_up_date}"></div>
+                        <div class="col-md-2" th:text="${visit.repair_date}"></div>
+                        <div class="col-md-1" th:text="${visit.productName}"></div>
+                        <div class="col-md-1" th:text="${visit.costs}"></div>
+                        <div class="col-md-1" th:text="${visit.servisantSurname}"></div>
+                        <div class="col-md-1" th:text="${visit.clientNameSurname}"></div>
+                    </div>
+            </div> -->
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //grab all header rows
+        $('th').each(function (column) {
+            $(this).addClass('sortable').click(function () {
+                var findSortKey = function ($cell) {
+                    return $cell.find('.sort-key').text().toUpperCase()+ ' ' + $cell.text().toUpperCase();
+
+                };
+                var sortDirection = $(this).is('.sorted-asc') ? -1 : 1;
+                var $rows = $(this).parent().parent().parent().find('tbody tr').get();
+
+                //loop through all the rows and find
+                $.each($rows, function (index, row) {
+                    row.sortKey = findSortKey($(row).children('td').eq(column));
+                });
+
+                //compare and sort the rows alphabetically or numerically
+                $rows.sort(function (a, b) {
+                    if (a.sortKey.indexOf('-') == -1 && (!isNaN(a.sortKey) && !isNaN(a.sortKey))) {
+                        //Rough Numeracy check
+
+                        if (parseInt(a.sortKey) < parseInt(b.sortKey)) {
+                            return -sortDirection;
+                        }
+
+                        if (parseInt(a.sortKey) > parseInt(b.sortKey)) {
+                            return sortDirection;
+                        }
+
+                    } else {
+                        if (a.sortKey < b.sortKey) {
+                            return -sortDirection;
+                        }
+                        if (a.sortKey > b.sortKey) {
+                            return sortDirection;
+                        }
+                    }
+                    return 0;
+                });
+
+                //add the rows in the correct order to the bottom of the table
+                $.each($rows, function (index, row) {
+                    $('tbody').append(row);
+                    row.sortKey = null;
+                });
+
+                //identify the column sort order
+                $('th').removeClass('sorted-asc sorted-desc');
+                var $sortHead = $('th').filter(':nth-child(' + (column + 1) + ')');
+                sortDirection == 1 ? $sortHead.addClass('sorted-asc') : $sortHead.addClass('sorted-desc');
+
+                //identify the column to be sorted by
+                $('td').removeClass('sorted').filter(':nth-child(' + (column + 1) + ')').addClass('sorted');
+            });
+        });
+    });
+
+</script>

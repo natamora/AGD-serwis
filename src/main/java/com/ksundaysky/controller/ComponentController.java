@@ -1,26 +1,38 @@
 package com.ksundaysky.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ksundaysky.model.Component;
 import com.ksundaysky.model.Role;
+import com.ksundaysky.model.Visit;
 import com.ksundaysky.service.ComponentService;
+import com.ksundaysky.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
+
 @Controller
 public class ComponentController {
 
 
     @Autowired
     ComponentService componentService;
+    @Autowired
+    private VisitService visitService;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value = {"/components/create"}, method = RequestMethod.GET)
     public ModelAndView createNewComponent() {
         ModelAndView modelAndView = new ModelAndView();
@@ -30,6 +42,7 @@ public class ComponentController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value = "/components/create", method = RequestMethod.POST)
     public ModelAndView createNewComponent(@Valid Component component, BindingResult bindingResult) {
 
@@ -51,7 +64,6 @@ public class ComponentController {
 
 
     @RequestMapping(value = "/components")
-
     public ModelAndView index(HttpServletRequest request)
     {
         ModelAndView modelAndView = new ModelAndView();
@@ -67,6 +79,7 @@ public class ComponentController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value = "/components/edit/{id}")
     public ModelAndView edit(@PathVariable int id){
         Component component = componentService.findById(id);
@@ -81,6 +94,7 @@ public class ComponentController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value = "/components/delete/{id}")
     public ModelAndView delete(@PathVariable int id){
         Component component = componentService.findById(id);
@@ -93,10 +107,21 @@ public class ComponentController {
     }
 
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value = {"/components/delete/accept/{id}"}, method = RequestMethod.GET)
     public ModelAndView deleteAccept( @PathVariable int id) {
 
         ModelAndView modelAndView = new ModelAndView();
+        Component component = componentService.findById(id);
+
+        for(Visit visit : visitService.findAll()){
+            Set<Component> componentSet = visit.getComponents();
+            if(componentSet.contains(component)) {
+                componentSet.remove(component);
+                visitService.saveVisit(visit);
+            }
+        }
+
         componentService.deleteById(id);
         modelAndView.setViewName("/home");
         modelAndView.addObject("successMessage", "Komponent został usunięty");
@@ -104,6 +129,7 @@ public class ComponentController {
 
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','SERWISANT')")
     @RequestMapping(value="/components/edit", method=RequestMethod.POST)
     public ModelAndView update(@Valid Component component, BindingResult bindingResult, HttpServletRequest request){
 
@@ -143,4 +169,16 @@ public class ComponentController {
         return modelAndView;
     }
 
+    @RequestMapping(path="/components/getall", method=RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List<Component> getAllEmployees(){
+        ObjectMapper objectMapper = new ObjectMapper();
+        String str = null;
+        try {
+            str = objectMapper.writeValueAsString(componentService.findAll());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return componentService.findAll();
+    }
 }

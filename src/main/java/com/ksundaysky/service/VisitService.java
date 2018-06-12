@@ -10,5 +10,6 @@ public interface VisitService {
     public List<Visit> findAll();
     public void update(Visit visit);
     public List<Visit> findAllProductVisits(int id);
+    public List<Visit> findVisitsByEmployerId(int id);
 
 }

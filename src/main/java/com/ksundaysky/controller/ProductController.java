@@ -5,6 +5,7 @@ import com.ksundaysky.model.Visit;
 import com.ksundaysky.service.ProductService;
 import com.ksundaysky.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ public class ProductController {
     @Autowired
     VisitService visitService;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = {"/clients/{id}/products/create"}, method = RequestMethod.GET)
     public ModelAndView createNewProdct(@PathVariable int id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -36,6 +38,7 @@ public class ProductController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = "/clients/{id}/products/create", method = RequestMethod.POST)
     public ModelAndView createNewProdct(@Valid Product product, BindingResult bindingResult, @PathVariable int id) {
 
@@ -57,7 +60,7 @@ public class ProductController {
              productService.saveProduct(product);
              modelAndView.addObject("successMessage", "Produkt został dodany");	            
              modelAndView.addObject("product", new Product());	             
-             modelAndView.setViewName("/home");	             
+             modelAndView.setViewName("/home");
         }
 
 
@@ -81,6 +84,7 @@ public class ProductController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = "/clients/{id}/products/edit/{productId}")
     public ModelAndView edit(@PathVariable("productId") int id, @PathVariable("id") int client_id){
         Product product = productService.findById(id);
@@ -95,6 +99,7 @@ public class ProductController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = "/clients/{id}/products/delete/{productId}")
     public ModelAndView delete(@PathVariable("productId") int productId, @PathVariable("id") int clientId){
         Product product = productService.findById(productId);
@@ -107,6 +112,7 @@ public class ProductController {
     }
 
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value = {"/clients/{id}/products/delete/accept/{productId}"}, method = RequestMethod.GET)
     public ModelAndView deleteAccept( @PathVariable int productId) {
 
@@ -118,6 +124,7 @@ public class ProductController {
 
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN','REJESTRUJACY')")
     @RequestMapping(value="/clients/{id}/products/edit", method=RequestMethod.POST)
     public ModelAndView update(@Valid Product product, BindingResult bindingResult, HttpServletRequest request){
 
@@ -146,6 +153,7 @@ public class ProductController {
 
         return new ModelAndView("redirect:/products");
     }
+
 
     @RequestMapping(value="/clients/{id}/products/{id}")
     public ModelAndView show(@PathVariable int id){

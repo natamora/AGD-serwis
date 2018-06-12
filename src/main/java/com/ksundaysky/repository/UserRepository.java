@@ -11,11 +11,10 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByEmail(String email);
-   // List<User> findUsersByRole_id(int id);
-   // List<User> findAllByRole_id(int role_id);
-    //User findByRole_id(int id);
     User findById(int id);
     @Transactional
     Long deleteById(int id);
+
+    
 
 }

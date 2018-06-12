@@ -2,6 +2,7 @@ package com.ksundaysky.controller;
 
 import javax.validation.Valid;
 
+import com.ksundaysky.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +20,10 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
+
+    public User loggedInUser;
 
 
     @RequestMapping(value={ "/login"}, method = RequestMethod.GET)
@@ -37,46 +42,18 @@ public class LoginController {
     }
 
 
-    @RequestMapping(value="/registration", method = RequestMethod.GET)
-    public ModelAndView registration(){
-        ModelAndView modelAndView = new ModelAndView();
-        User user = new User();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("registration");
-        return modelAndView;
-    }
-
-//    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-//    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
-//        ModelAndView modelAndView = new ModelAndView();
-//        User userExists = userService.findUserByEmail(user.getEmail());
-//        if (userExists != null) {
-//            bindingResult
-//                    .rejectValue("email", "error.user",
-//                            "There is already a user registered with the email provided");
-//        }
-//        if (bindingResult.hasErrors()) {
-//            modelAndView.setViewName("registration");
-//        } else {
-//            userService.saveUser(user);
-//            modelAndView.addObject("successMessage", "User has been registered successfully");
-//            modelAndView.addObject("user", new User());
-//            modelAndView.setViewName("registration");
-//
-//        }
-//        return modelAndView;
-//    }
-
     @RequestMapping(value={"/","/home"}, method = RequestMethod.GET)
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
+
         if(user == null)
             modelAndView.setViewName("/login");
         else {
             modelAndView.addObject("userName", "Witaj " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-            modelAndView.addObject("adminMessage", "Zawartośc widoczna wyłącznie dla kierownika");
+            modelAndView.addObject("adminMessage", "Użytkownik " +  roleService.getRoleById(user.getRole_id()).getRole());
+            loggedInUser = user;
             modelAndView.setViewName("/home");
         }
 

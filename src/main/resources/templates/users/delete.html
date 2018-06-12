@@ -4,6 +4,7 @@
 
 <head>
     <title>Usuwanie pracownika</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user_view.css}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -11,31 +12,51 @@
 
 <body>
 <div th:replace="fragments/header :: header">...</div>
-<div class="panel-group" style="margin-top:40px">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <span th:utext="${user.name}"></span>
-        </div>
-        <div class="panel-body">
-            <label>Imię:</label>
-            <p th:utext="${user.name}"></p>
-            <label>Nazwisko:</label>
-            <p th:utext="${user.lastName}"></p>
-            <label>Email:</label>
-            <p th:utext="${user.email}"></p>
-            <label>Doświadczenie:</label>
-            <p th:utext="${user.experience}"></p>
-            <label>Data rozpoczecia:</label>
-            <p th:utext="${user.jobStartingDate}"></p>
+    <div class = "container">
+        <div class="panel-group" style="margin-top:40px">
+            <div class="panel panel-primary">
+                <div class="panel-heading" th:utext="${user.name}"></div>
+            </div>
+            <div class="panel-body">
+                <div class="row info-item col-md-offset-2 col-md-8">
+                    <div class="col-md-6"><strong>Imie:</strong></div>
+                    <div class="col-md-4 col-md-offset-2" th:text="${user.name}"></div>
+                </div>
+                <div class="row info-item col-md-offset-2 col-md-8">
+                    <div class="col-md-6"><strong>Nazwisko:</strong></div>
+                    <div class="col-md-4 col-md-offset-2" th:text="${user.lastName}"></div>
+                </div>
+                <div class="row info-item col-md-offset-2 col-md-8">
+                    <div class="col-md-6"><strong>Email:</strong></div>
+                    <div class="col-md-4 col-md-offset-2" th:text="${user.email}"></div>
+                </div>
+                <div class="row info-item col-md-offset-2 col-md-8">
+                    <div class="col-md-6"><strong>Doświadczenie:</strong></div>
+                    <div class="col-md-4 col-md-offset-2" th:text="${user.experience}"></div>
+                </div>
+                <div class="row info-item col-md-offset-2 col-md-8">
+                    <div class="col-md-6"><strong>Data rozpoczęcia:</strong></div>
+                    <div class="col-md-4 col-md-offset-2" th:text="${user.jobStartingDate}"></div>
+                </div>
+                <div class="row info-item col-md-offset-2 col-md-8">
+                    <div class="col-md-6"><strong>Dni pracujące:</strong></div>
+                    <div class="col-md-4 col-md-offset-2">
+                        <div th:if="${workdays.monday}" th:text="Poniedziałek"></div>
+                        <div th:if="${workdays.tuesday}" th:text="Wtorek"></div>
+                        <div th:if="${workdays.wednesday}" th:text="Środa"></div>
+                        <div th:if="${workdays.thursday}" th:text="Czwartek"></div>
+                        <div th:if="${workdays.friday}" th:text="Piątek"></div>
+
+                    </div>
+                </div>
+
+            </div>
+            <form th:action="@{/users/delete/accept/} + ${user.id}" method="get">
+                <button class="btn btn-md btn-danger btn-block" name="delete"
+                        type="Submit">Usuń</button>
+            </form>
         </div>
     </div>
-</div>
-
-<form th:action="@{/users/delete/accept/} + ${user.id}" method="get">
-    <button class="btn btn-md btn-danger btn-block" name="delete"
-            type="Submit">Usuń</button>
-</form>
-
 
 </body>
 </html>
