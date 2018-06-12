@@ -28,7 +28,7 @@ public class Product {
         @Column(name = "unique_number")
         @Digits(integer=10, fraction=0, message = "provide valid serial number")
         private String serial;
-        //id wlasciciela produktu
+
         @Column(name = "client_id")
         private int client_id;
 

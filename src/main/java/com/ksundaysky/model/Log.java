@@ -28,16 +28,7 @@ public class Log {
     private String message;
 
 
-//    @javax.persistence.Transient
-//    private String authorRole;
-//
-//    public String getAuthorRole() {
-//        return authorRole;
-//    }
-//
-//    public void setAuthorRole(String authorRole) {
-//        this.authorRole = authorRole;
-//    }
+
 
     public int getId() {
         return id;

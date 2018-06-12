@@ -63,15 +63,10 @@ public class VisitServiceImpl implements VisitService{
        return visitRepository.findAllByEmployerId(id);
     }
 
-// ten update jest do updatowania przez serwisanta, przy edycji wizyty przez rejestrujacego dodac nowy update, zeby w logach sie roznily miedzy soba
-    @Override
+   @Override
     public void update(Visit visit) {
 
-//        Role[] role = new Role[1];
-////        user.getRoles().toArray(role);
-////        Role userRole = roleRepository.findByRole(role[0].getRole());
-////        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-        visitRepository.save(visit);
+       visitRepository.save(visit);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user= userRepository.findByEmail(auth.getName());
         Timestamp time = new Timestamp(System.currentTimeMillis());

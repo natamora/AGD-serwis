@@ -6,11 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
-
 </head>
 <body>
-
     <nav class="navbar navbar-inverse" th:fragment="header">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -22,22 +19,11 @@
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>
-                                <form class="center-block" th:action="@{/users/list}" method="get">
-                                    <button class="btn btn-md btn-link" name="roleId"
-                                            type="Submit">Lista użytkowników</button>
-                                </form>
+                            <a th:href="@{/users}">Lista użytkowników</a>
                         </li>
-                        <li><a th:href="@{/users/create}"  >Dodaj użytkownika</a></li>
+                        <li><a th:href="@{/users/create}">Dodaj użytkownika</a></li>
                     </ul>
                 </li>
-
-                <!--<li class="dropdown">-->
-                    <!--<a class="dropdown-toggle" data-toggle="dropdown" th:href="@{/products}" >Produkty-->
-                        <!--<span class="caret"></span></a>-->
-                    <!--<ul class="dropdown-menu">-->
-                        <!--<li><a th:href="@{/products}" >Lista produktów</a></li>-->
-                    <!--</ul>-->
-                <!--</li>-->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" th:href="@{/components}" >Komponenty
                     <span class="caret"></span></a>
@@ -65,8 +51,8 @@
 
                  <li>
                     <a th:href="@{/logs}" sec:authorize="hasAnyAuthority('ADMIN')" >Logi</a>
-
                 </li>
+
                 <li>
 
                     <a th:href="@{/services}">Usługi</a>
@@ -88,6 +74,7 @@
                         <!--<li><a th:href="@{/visits}" >Lista wizyt</a></li>-->
                     <!--</ul>-->
                 <!--</li>-->
+
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
