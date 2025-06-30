@@ -1,11 +1,10 @@
-# AGD-Serwis
+# Appliance Service (AGD-Serwis)
 
-**AGD-Serwis** to aplikacja stworzona w ramach przedmiotu *Systemy Informatyczne*. Projekt miał na celu stworzenie aplikacji wykorzystującej metody i narzędzia z procesu wytwarzania oprogramowania. Prace realizowano przez semestr w siedmioosobowym zespole, stosując metodykę *Scrum*.
+**AGD-Serwis** is an application developed as part of the *Information Systems* course. The project aimed to create an application utilizing methods and tools from the software development process. The work was carried out over a semester by a team of seven people following the *Scrum* methodology.
 
-Projekt rozpoczął się od analizy wymagań, opracowania product backlogu, oszacowania czasu oraz poziomu trudności User Stories i przygotowania harmonogramu iteracji. Ostatecznie zespół zaprezentował działającą aplikację, pokazując zrealizowane funkcjonalności oraz postępy projektu. Omówiono zrealizowane elementy oraz te, które nie zostały wdrożone, a także oceniono pracę zespołową.
+The project started with requirements analysis, product backlog creation, time and difficulty estimation of User Stories, and iteration scheduling. Finally, the team presented a working application showcasing implemented functionalities and project progress. The discussion included completed features, those not implemented, and an evaluation of teamwork.
 
-
-## Technologie
+## Technologies
 
 - **Java**
 - **Spring**
@@ -13,22 +12,22 @@ Projekt rozpoczął się od analizy wymagań, opracowania product backlogu, osza
 - **JavaScript**
 - **jQuery**
 
-## Zaplanowane Wymagania
+## Planned Requirements
 
-- Logowanie użytkownika
-- Przydzielenie praw przez administratora
-- Dodanie ról użytkowników (administrator, rejestrujący, kierownik, serwisant, księgowa) i widoków specyficznych dla tych ról
-- Widok możliwych usług dostępny dla kierownika i rejestrującego
-- Widok historii usterek dla poszczególnych urządzeń
-- Funkcja dodania nowego urządzenia do naprawy
-- Edycja napraw
-- Usuwanie produktów
-- Panel pracowników
-- Wyszukiwanie pracowników (po pozycji)
-- Kalendarz pracy w firmie
-- Panel wprowadzenia produktu do naprawy
-- Panel serwisowanego produktu
-- Panel wyszukiwania usług, napraw
-- Harmonogram pracy w firmie (tygodniowy, miesięczny, roczny)
-- Historia wszelkich zmian w serwisie (logi)
-- Panel księgowej, generowanie raportów do postaci PDF
+- User login
+- Admin-assigned permissions
+- User roles (administrator, registrar, manager, technician, accountant) and role-specific views
+- Service overview available for manager and registrar
+- Fault history view for individual devices
+- Ability to add new devices for repair
+- Edit repairs
+- Delete products
+- Employee panel
+- Employee search (by position)
+- Company work calendar
+- Panel for adding products to repair
+- Service product panel
+- Search panel for services and repairs
+- Company work schedule (weekly, monthly, yearly)
+- Service change history (logs)
+- Accountant panel with PDF report generation
