@@ -1,4 +1,4 @@
-# Appliance Service (AGD-Serwis)
+# AGD-Serwis
 
 **AGD-Serwis** is an application developed as part of the *Information Systems* course. The project aimed to create an application utilizing methods and tools from the software development process. The work was carried out over a semester by a team of seven people following the *Scrum* methodology.
 
